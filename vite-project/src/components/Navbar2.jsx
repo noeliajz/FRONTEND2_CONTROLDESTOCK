@@ -16,7 +16,7 @@ const Navbar2 = () => {
             <Nav.Link href="/">Inicio</Nav.Link>
             <Nav.Link href="#pricing">Quienes somos</Nav.Link>
             <Nav.Link href="#pricing">Contacto</Nav.Link>
-            <Nav.Link href="#pricing">Registro</Nav.Link>
+            <Nav.Link href="/Register">Registro</Nav.Link>
             <Nav.Link href="/Login">Login</Nav.Link>
         </Nav>
         </Navbar.Collapse>
