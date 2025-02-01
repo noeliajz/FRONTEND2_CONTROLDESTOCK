@@ -4,6 +4,7 @@ import HomePage from "../pages/HomePage";
 import PaginaError404 from "../pages/PaginaError404"
 import UserPage from "../pages/UserPage";
 import AddProducts from "../pages/AddProducts";
+import Login from "../pages/Login";
 
 
 
@@ -16,6 +17,7 @@ function RoutesPage() {
         <Route path='/error404' element={<PaginaError404/>}/>
         <Route path='/UserPage' element={<UserPage/>}/>
         <Route path='/AddProducts' element={<AddProducts/>}/>
+        <Route path='/Login' element={<Login/>}/>
 
       </Routes>
   );
