@@ -8,9 +8,11 @@ import Footer from '../components/Footer'
 const HomePage = () => {
   return (
     <>
+     <Navbar2/>
      <Carousel2/>
      <h1>ENVIO GRATIS a todo el país a partir de $149.990</h1>
      <CardAllProducts/>
+     <Footer/>
     </>
   )
 }

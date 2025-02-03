@@ -1,12 +1,14 @@
 import React from "react";
 import { NavLink } from "react-router-dom";  // Agregar esta importación
 import Table from "react-bootstrap/Table";
+import Navbar2 from "../components/Navbar2";
+import Footer from "../components/Footer";
 
 const AddProducts = () => {
   return (
     <>
       <h2>Agregar productos</h2>
-
+      <Navbar2/>
       <Table responsive striped bordered hover>
         <thead>
           <tr>
@@ -37,6 +39,7 @@ const AddProducts = () => {
         </tbody>
       </Table>
       <NavLink to="/UserPage" className="btn btn-primary">Aceptar</NavLink>
+      <Footer/>
     </>
   );
 };

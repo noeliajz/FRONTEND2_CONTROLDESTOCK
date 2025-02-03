@@ -7,8 +7,10 @@ import { NavLink } from "react-router-dom";  // Agregar esta importación
 const CrudProducts = () => {
   return (
     <>
+     <Navbar2/>
      <TableProducts/>
      <NavLink to="/UserPage" className="btn btn-primary">Aceptar</NavLink>
+     <Footer/> 
     </>
   )
 }
