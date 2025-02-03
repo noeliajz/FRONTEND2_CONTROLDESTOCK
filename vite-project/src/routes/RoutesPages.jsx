@@ -6,6 +6,7 @@ import UserPage from "../pages/UserPage";
 import AddProducts from "../pages/AddProducts";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import CrudProducts from "../pages/CrudProducts";
 
 
 
@@ -20,6 +21,7 @@ function RoutesPage() {
         <Route path='/AddProducts' element={<AddProducts/>}/>
         <Route path='/Login' element={<Login/>}/>
         <Route path='/Register' element={<Register/>}/>
+        <Route path='/CrudProducts' element={<CrudProducts/>}/>
 
       </Routes>
   );
