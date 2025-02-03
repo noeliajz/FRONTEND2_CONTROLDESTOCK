@@ -5,9 +5,7 @@ import FormLogin from '../components/FormLogin'
 const Login = () => {
   return (
     <>
-     <Navbar2/>
      <FormLogin/>
-     <footer/> 
     </>
   )
 }
