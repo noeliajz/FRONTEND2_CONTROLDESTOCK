@@ -7,6 +7,7 @@ import AddProducts from "../pages/AddProducts";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import CrudProducts from "../pages/CrudProducts";
+import NewProduct from "../pages/NewProduct";
 
 
 
@@ -22,6 +23,7 @@ function RoutesPage() {
         <Route path='/Login' element={<Login/>}/>
         <Route path='/Register' element={<Register/>}/>
         <Route path='/CrudProducts' element={<CrudProducts/>}/>
+        <Route path='/NewProduct' element={<NewProduct/>}/>
 
       </Routes>
   );
