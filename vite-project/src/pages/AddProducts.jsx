@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import Table from "react-bootstrap/Table";
-import Navbar2 from "../components/Navbar2";
 import Footer from "../components/Footer";
 import Button from "react-bootstrap/Button";
 
@@ -20,7 +19,6 @@ const AddProducts = () => {
 
   return (
     <>
-      <Navbar2 />
       <h2 className="text-center mt-4">Lista de Productos</h2>
       <Table responsive striped bordered hover className="m-5">
         <thead>

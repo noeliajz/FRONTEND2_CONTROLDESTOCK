@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Table from "react-bootstrap/Table";
-import Navbar2 from "../components/Navbar2";
 import Footer from "../components/Footer";
 import Button from "react-bootstrap/Button";
 
@@ -20,8 +19,8 @@ const AddProducts = () => {
 
   return (
     <>
-      <Navbar2 />
       <h2 className="text-center mt-4">CRUD de Productos</h2>
+      <Link to='/NewProduct'>Nuevo</Link>{' '}
       <Table responsive striped bordered hover className="m-5">
         <thead>
           <tr>
@@ -53,7 +52,7 @@ const AddProducts = () => {
               </td>
               <td>
                 <Button variant="warning" size="sm">Editar</Button>{' '}
-                <Button variant="warning" size="sm">Eliminar</Button>{' '}
+                <Button variant="danger" size="sm">Eliminar</Button>{' '}
               </td>
             </tr>
           ))}
