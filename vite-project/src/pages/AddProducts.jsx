@@ -1,15 +1,35 @@
 import React from "react";
-import { NavLink } from "react-router-dom";  // Agregar esta importación
+import { NavLink } from "react-router-dom"; // Agregar esta importación
 import Table from "react-bootstrap/Table";
 import Navbar2 from "../components/Navbar2";
 import Footer from "../components/Footer";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 const AddProducts = () => {
   return (
     <>
+      <Navbar2 />
       <h2>Agregar productos</h2>
-      <Navbar2/>
-      <Table responsive striped bordered hover>
+      <Form>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Ingresar productos</Form.Label>
+          <Form.Control type="text" placeholder="" />
+        </Form.Group>
+        <Button variant="primary" type="submit">
+          Buscar
+        </Button>
+      </Form>
+      <Form>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Ingresar cantidad</Form.Label>
+          <Form.Control type="text" placeholder="" />
+        </Form.Group>
+        <Button variant="primary" type="submit">
+          Agregar
+        </Button>
+      </Form>
+      <Table responsive striped bordered hover className="m-5">
         <thead>
           <tr>
             <th>#</th>
@@ -38,8 +58,10 @@ const AddProducts = () => {
           </tr>
         </tbody>
       </Table>
-      <NavLink to="/UserPage" className="btn btn-primary">Aceptar</NavLink>
-      <Footer/>
+      <NavLink to="/UserPage" className="btn btn-primary">
+        Aceptar
+      </NavLink>
+      <Footer />
     </>
   );
 };
