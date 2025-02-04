@@ -1,66 +1,66 @@
-import React from "react";
-import { NavLink } from "react-router-dom"; // Agregar esta importación
+import React, { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import Navbar2 from "../components/Navbar2";
 import Footer from "../components/Footer";
 import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
 
 const AddProducts = () => {
+  const [products, setProducts] = useState([]);
+
+  const getAllProducts = async () => {
+    const res = await fetch("http://localhost:8080/api/product");
+    const data = await res.json();
+    setProducts(data.productos || []);
+  };
+
+  useEffect(() => {
+    getAllProducts();
+  }, []);
+
   return (
     <>
       <Navbar2 />
-      <h2>Agregar productos</h2>
-      <Form>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Ingresar productos</Form.Label>
-          <Form.Control type="text" placeholder="" />
-        </Form.Group>
-        <Button variant="primary" type="submit">
-          Buscar
-        </Button>
-      </Form>
-      <Form>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Ingresar cantidad</Form.Label>
-          <Form.Control type="text" placeholder="" />
-        </Form.Group>
-        <Button variant="primary" type="submit">
-          Agregar
-        </Button>
-      </Form>
+      <h2 className="text-center mt-4">Lista de Productos</h2>
       <Table responsive striped bordered hover className="m-5">
         <thead>
           <tr>
             <th>#</th>
-            <th>Productos</th>
-            <th>Cantidad</th>
+            <th>Producto</th>
+            <th>Descripción</th>
+            <th>Stock</th>
+            <th>Precio</th>
+            <th>Fecha de ingreso</th>
+            <th>Imagen</th>
             <th>Acción</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td colSpan={2}>Larry the Bird</td>
-            <td>@twitter</td>
-          </tr>
+          {products.map((product, index) => (
+            <tr key={product._id || index}>
+              <td>{index + 1}</td>
+              <td>{product.nombre}</td>
+              <td>{product.descripcion}</td>
+              <td>{product.stock}</td>
+              <td>${product.precio}</td>
+              <td>{new Date(product.fecha).toLocaleDateString()}</td>
+              <td>
+                <img
+                  src={`http://localhost:8080/${product.imagen}`}
+                  alt={product.nombre}
+                  style={{ width: "50px", height: "50px", objectFit: "cover" }}
+                />
+              </td>
+              <td>
+                <Button variant="warning" size="sm">Editar</Button>{' '}
+              </td>
+            </tr>
+          ))}
         </tbody>
       </Table>
-      <NavLink to="/UserPage" className="btn btn-primary">
-        Aceptar
-      </NavLink>
+      <div className="text-center">
+        <NavLink to="/UserPage" className="btn btn-primary">Aceptar</NavLink>
+      </div>
       <Footer />
     </>
   );
