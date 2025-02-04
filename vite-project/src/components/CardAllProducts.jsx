@@ -42,7 +42,6 @@ function CardAllProducts() {
                 <Card.Body>
                   <Card.Title>{product.nombre || "Producto"}</Card.Title>
                   <Card.Text>{product.descripcion || "Sin descripción"}</Card.Text>
-                  {/* Mostrar los datos del producto */}
                   <Card.Text>
                     Precio: ${product.precio || "No disponible"}
                   </Card.Text>
