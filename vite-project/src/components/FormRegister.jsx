@@ -1,17 +1,18 @@
 import React  , { useState }  from 'react'
+import axios from 'axios';
 
 const FormRegister = () => {
   const [formInputs, setFormInputs] = useState({
     nombres: "",
     apellido: "",
-    email: "",
+    usuario: "",
     contrasenia: "",
   });
 
   const [errors, setErrors] = useState({
     nombres: false,
     apellido: false,
-    email: false,
+    usuario: false,
     contrasenia: false,
   });
 
@@ -24,7 +25,7 @@ const FormRegister = () => {
 
     const isInvalid =
       (name === "nombres" || name === "apellido") && (value.length < 3 || value.length > 25) ||
-      name === "email" && (value.length < 3 || value.length > 25) ||
+      name === "usuario" && (value.length < 3 || value.length > 25) ||
       name === "contrasenia" && (value.length < 4 || value.length > 25);
 
     setErrors({ ...errors, [name]: isInvalid });
@@ -36,7 +37,7 @@ const FormRegister = () => {
     if (
       formInputs.nombres.length < 3 ||
       formInputs.apellido.length < 3 ||
-      formInputs.email.length < 3 ||
+      formInputs.usuario.length < 3 ||
       formInputs.contrasenia.length < 4
     ) {
       alert("Por favor, completa los campos correctamente.");
@@ -44,7 +45,7 @@ const FormRegister = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:5000/api", formInputs, {
+      const res = await axios.post("http://localhost:8080/api", formInputs, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -52,7 +53,7 @@ const FormRegister = () => {
 
       alert("Registro exitoso");
       setTimeout(() => {
-        location.href = "/IniciarSesion";
+        location.href = "/Login";
       }, 3000);
     } catch (error) {
       const errorMessage = error.response?.data?.message || "Ocurrió un error desconocido. Intente nuevamente.";
@@ -98,19 +99,19 @@ const FormRegister = () => {
           </div>
 
           <div className="mb-3">
-            <label htmlFor="email" className="form-label">Ingresar email</label>
+            <label htmlFor="usuario" className="form-label">Ingresar usuario</label>
             <input
               type="email"
-              name="email"
+              name="usuario"
               onChange={handleChange}
-              className={`form-control ${errors.email ? "is-invalid" : ""}`}
-              id="email"
-              value={formInputs.email}
+              className={`form-control ${errors.usuario ? "is-invalid" : ""}`}
+              id="usuario"
+              value={formInputs.usuario}
               placeholder=" "
               required
               maxLength="25"
             />
-            {errors.email && <div className="invalid-feedback">El email debe tener entre 3 y 25 caracteres.</div>}
+            {errors.usuario && <div className="invalid-feedback">El usuario debe tener entre 3 y 25 caracteres.</div>}
           </div>
 
           <div className="mb-3">
