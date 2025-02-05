@@ -19,7 +19,6 @@ const NewUser = () => {
   const validateField = (name, value) => {
     let error = "";
 
-    // Verificar si el campo está vacío
     if (!value.trim()) {
       return "Este campo es obligatorio";
     }
@@ -54,12 +53,10 @@ const NewUser = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Limitar el número de caracteres a 25
     if (value.length > 25) return;
 
     setFormData({ ...formData, [name]: value });
 
-    // Validar campo individualmente y actualizar errores
     const errorMessage = validateField(name, value);
     setErrors((prevErrors) => ({
       ...prevErrors,
@@ -71,7 +68,6 @@ const NewUser = () => {
     e.preventDefault();
     let newErrors = {};
 
-    // Validar todos los campos al enviar
     Object.keys(formData).forEach((key) => {
       const errorMessage = validateField(key, formData[key]);
       if (errorMessage) {
@@ -81,7 +77,6 @@ const NewUser = () => {
 
     setErrors(newErrors);
 
-    // Si no hay errores, mostrar mensaje de éxito
     if (Object.keys(newErrors).length === 0) {
       alert("Formulario enviado correctamente");
     }
