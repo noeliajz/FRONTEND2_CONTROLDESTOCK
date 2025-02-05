@@ -1,7 +1,11 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 
 const FormLogin = () => {
+  const navigate = useNavigate();
+
   const [formInputs, setFormInputs] = useState({
     usuario: "",
     contrasenia: "",
@@ -12,82 +16,87 @@ const FormLogin = () => {
     contrasenia: "",
   });
 
-  // Expresión regular para validar email
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const validarUsuario = (usuario) => {
+    if (usuario.length < 3 || usuario.length > 25) {
+      return "Debe tener entre 3 y 25 caracteres.";
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(usuario)) {
+      return "Debe ser un correo válido.";
+    }
+    return "";
+  };
+
+  const validarContrasenia = (contrasenia) => {
+    if (contrasenia.length < 4 || contrasenia.length > 25) {
+      return "Debe tener entre 4 y 25 caracteres.";
+    }
+    return "";
+  };
 
   const handleChange = (ev) => {
     const { name, value } = ev.target;
 
-    if (value.length > 25) return; // Evita que se ingresen más de 25 caracteres
+    if (value.length > 25) return;
 
     setFormInputs({ ...formInputs, [name]: value });
 
-    if (name === "usuario") {
-      setErrores({
-        ...errores,
-        usuario: 
-          value.length < 3
-            ? "El usuario debe tener al menos 3 caracteres."
-            : !emailRegex.test(value)
-            ? "Debe ingresar un email válido."
-            : "",
-      });
-    }
+    let errorMsg = "";
+    if (name === "usuario") errorMsg = validarUsuario(value);
+    if (name === "contrasenia") errorMsg = validarContrasenia(value);
 
-    if (name === "contrasenia") {
-      setErrores({
-        ...errores,
-        contrasenia:
-          value.length < 4
-            ? "La contraseña debe tener al menos 4 caracteres."
-            : "",
-      });
-    }
+    setErrores({ ...errores, [name]: errorMsg });
   };
 
-  const handleClick = (ev) => {
+  const handleSubmit = async (ev) => {
     ev.preventDefault();
 
-    if (!formInputs.usuario.trim() || !formInputs.contrasenia.trim()) {
+    const usuarioError = validarUsuario(formInputs.usuario);
+    const contraseniaError = validarContrasenia(formInputs.contrasenia);
+
+    if (usuarioError || contraseniaError) {
       setErrores({
-        usuario: !formInputs.usuario.trim() ? "El usuario es obligatorio." : "",
-        contrasenia: !formInputs.contrasenia.trim()
-          ? "La contraseña es obligatoria."
-          : "",
+        usuario: usuarioError,
+        contrasenia: contraseniaError,
       });
       return;
     }
 
-    if (!emailRegex.test(formInputs.usuario)) {
-      setErrores((prev) => ({
-        ...prev,
-        usuario: "Debe ingresar un email válido.",
-      }));
-      return;
-    }
+    try {
+      const res = await axios.post("http://localhost:8080/api/login", formInputs, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    console.log("Datos enviados:", formInputs);
+      alert("Inicio de sesión exitoso");
+      setTimeout(() => {
+        navigate("/UserPage");
+      }, 3000);
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || "Credenciales incorrectas.";
+      alert("Error en el inicio de sesión: " + errorMessage);
+    }
   };
 
   return (
-    <Container fluid style={{ background: "#FFFFFF" }}>
+    <Container fluid>
       <Row>
-        <Col className="d-flex justify-content-center" sm={12} md={10} lg={10}>
-          <Form className="p-5 text-center">
-            <Form.Group className="mb-3" controlId="formBasicUsuario">
-              <Form.Label>Ingresar email</Form.Label>
+        <Col className="d-flex justify-content-center" sm={12} md={10} lg={12}>
+          <Form className="p-5 text-center" onSubmit={handleSubmit}>
+            <Form.Group controlId="formBasicUsuario">
+              <Form.Label>Ingresar usuario</Form.Label>
               <Form.Control
                 name="usuario"
                 value={formInputs.usuario}
                 onChange={handleChange}
                 className={errores.usuario ? "form-control is-invalid" : "form-control"}
-                type="email"
+                type="text"
                 maxLength={25}
-                placeholder="Ingrese su correo electrónico"
+                placeholder=""
+                required
               />
-              {errores.usuario && (
-                <Form.Text className="text-danger">{errores.usuario}</Form.Text>
-              )}
+              {errores.usuario && <Form.Text className="text-danger">{errores.usuario}</Form.Text>}
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Ingresar contraseña</Form.Label>
@@ -98,17 +107,12 @@ const FormLogin = () => {
                 className={errores.contrasenia ? "form-control is-invalid" : "form-control"}
                 type="password"
                 maxLength={25}
-                placeholder="Ingrese su contraseña"
+                placeholder=""
+                required
               />
-              {errores.contrasenia && (
-                <Form.Text className="text-danger">{errores.contrasenia}</Form.Text>
-              )}
+              {errores.contrasenia && <Form.Text className="text-danger">{errores.contrasenia}</Form.Text>}
             </Form.Group>
-            <Button
-              style={{ background: "#000000", color: "#CCFF01" }}
-              onClick={handleClick}
-              type="submit"
-            >
+            <Button style={{ background: "#000000", color: "#CCFF01" }} type="submit">
               Ingresar
             </Button>
           </Form>
