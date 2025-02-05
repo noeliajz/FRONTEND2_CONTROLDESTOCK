@@ -74,7 +74,6 @@ const FormLogin = () => {
       <Row>
         <Col className="d-flex justify-content-center" sm={12} md={10} lg={10}>
           <Form className="p-5 text-center">
-            {/* Usuario (Email) */}
             <Form.Group className="mb-3" controlId="formBasicUsuario">
               <Form.Label>Ingresar email</Form.Label>
               <Form.Control
@@ -90,8 +89,6 @@ const FormLogin = () => {
                 <Form.Text className="text-danger">{errores.usuario}</Form.Text>
               )}
             </Form.Group>
-
-            {/* Contraseña */}
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Ingresar contraseña</Form.Label>
               <Form.Control
@@ -107,8 +104,6 @@ const FormLogin = () => {
                 <Form.Text className="text-danger">{errores.contrasenia}</Form.Text>
               )}
             </Form.Group>
-
-            {/* Botón de envío */}
             <Button
               style={{ background: "#000000", color: "#CCFF01" }}
               onClick={handleClick}
