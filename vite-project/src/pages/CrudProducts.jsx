@@ -4,7 +4,7 @@ import Table from "react-bootstrap/Table";
 import Footer from "../components/Footer";
 import Button from "react-bootstrap/Button";
 
-const AddProducts = () => {
+const CrudProducts = () => {
   const [products, setProducts] = useState([]);
 
   const getAllProducts = async () => {
@@ -66,4 +66,4 @@ const AddProducts = () => {
   );
 };
 
-export default AddProducts;
+export default CrudProducts;
