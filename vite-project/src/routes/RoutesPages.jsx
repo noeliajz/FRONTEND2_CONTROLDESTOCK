@@ -8,7 +8,8 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import CrudProducts from "../pages/CrudProducts";
 import NewProduct from "../pages/NewProduct";
-
+import CrudUsers from "../pages/CrudUsers"
+import NewUser from "../pages/NewUser";
 
 
 
@@ -24,6 +25,8 @@ function RoutesPage() {
         <Route path='/Register' element={<Register/>}/>
         <Route path='/CrudProducts' element={<CrudProducts/>}/>
         <Route path='/NewProduct' element={<NewProduct/>}/>
+        <Route path='/CrudUsers' element={<CrudUsers/>}/>
+        <Route path='/NewUser' element={<NewUser/>}/>
 
       </Routes>
   );
