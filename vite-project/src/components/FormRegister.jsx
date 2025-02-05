@@ -53,7 +53,7 @@ const FormRegister = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:8080/api", formInputs, {
+      await axios.post("http://localhost:8080/api", formInputs, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -61,7 +61,7 @@ const FormRegister = () => {
 
       alert("Registro exitoso");
       setTimeout(() => {
-        navigate("/UserPage");
+        navigate("/Login");
       }, 3000);
     } catch (error) {
       const errorMessage = error.response?.data?.message || "Ocurrió un error desconocido. Intente nuevamente.";
@@ -74,36 +74,33 @@ const FormRegister = () => {
       <form className="w-50" onSubmit={handleSubmit}>
         <h2 className="form_tittle">Crea una Cuenta</h2>
         <div className="form_container">
-          
-          {["nombres", "apellido", "usuario", "contrasenia", "repetirContrasenia"].map((field) => (
-            <div className="mb-3" key={field}>
-              <label htmlFor={field} className="form-label">
-                {`Ingresar ${field}`}
-              </label>
+          {[
+            { name: "nombres", label: "Ingresar nombres", type: "text" },
+            { name: "apellido", label: "Ingresar apellidos", type: "text" },
+            { name: "usuario", label: "Ingresar usuario", type: "text" },
+            { name: "contrasenia", label: "Ingresar contraseña", type: "password" },
+            { name: "repetirContrasenia", label: "Repetir contraseña", type: "password" }
+          ].map(({ name, label, type }) => (
+            <div className="mb-3" key={name}>
+              <label htmlFor={name} className="form-label">{label}</label>
               <input
-                type={field.includes("contrasenia") ? "password" : "text"}
-                name={field}
+                type={type}
+                name={name}
                 onChange={handleChange}
-                className={`form-control ${errors[field] ? "is-invalid" : ""}`}
-                id={field}
-                value={formInputs[field]}
+                className={`form-control ${errors[name] ? "is-invalid" : ""}`}
+                id={name}
+                value={formInputs[name]}
                 placeholder=" "
                 required
                 maxLength="25"
               />
-              {errors[field] && (
+              {errors[name] && (
                 <div className="invalid-feedback">
-                  {field === "repetirContrasenia"
-                    ? "Las contraseñas no coinciden."
-                    : field === "contrasenia"
-                      ? "La contraseña debe tener entre 4 y 25 caracteres."
-                      : "Debe tener entre 3 y 25 caracteres."
-                  }
+                  {name === "repetirContrasenia" ? "Las contraseñas no coinciden." : "Debe tener entre 3 y 25 caracteres."}
                 </div>
               )}
             </div>
           ))}
-
           <button 
             type="submit" 
             className="btn" 
@@ -112,7 +109,6 @@ const FormRegister = () => {
           >
             Enviar
           </button>
-
         </div>
       </form>
     </div>
