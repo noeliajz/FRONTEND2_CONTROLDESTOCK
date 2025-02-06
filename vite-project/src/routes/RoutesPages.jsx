@@ -27,7 +27,7 @@ function RoutesPage() {
         <Route path='/NewProduct' element={<NewProduct/>}/>
         <Route path='/CrudUsers' element={<CrudUsers/>}/>
         <Route path='/NewUser' element={<NewUser/>}/>
-        <Route path='/ProductEdit' element={<ProductEdit/>}/>
+        <Route path='/ProductEdit/:id' element={<ProductEdit/>}/>
 
       </Routes>
   );
