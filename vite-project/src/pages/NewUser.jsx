@@ -1,158 +1,184 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Link, NavLink } from "react-router-dom";
 
-const NewUser = () => {
-  const [formData, setFormData] = useState({
+function NewUser() {
+  const [formValues, setFormValues] = useState({
     nombres: "",
-    apellidos: "",
+    apellido: "",
     usuario: "",
-    contrasenia: "",
+    contrasenia: ""
   });
 
   const [errors, setErrors] = useState({
-    nombres: "",
-    apellidos: "",
-    usuario: "",
-    contrasenia: "",
+    nombres: false,
+    apellido: false,
+    usuario: false,
+    contrasenia: false
   });
 
-  const validateField = (name, value) => {
-    let error = "";
+  const handleChange = (ev) => {
+    const { name, value } = ev.target;
 
-    if (!value.trim()) {
-      return "Este campo es obligatorio";
+    if (value.length <= 25) {
+      setFormValues((prev) => ({ ...prev, [name]: value }));
     }
 
-    switch (name) {
-      case "nombres":
-      case "apellidos":
-        if (value.length < 3 || value.length > 25) {
-          error = "Debe tener entre 3 y 25 caracteres";
-        }
-        break;
+    let error = false;
 
-      case "usuario":
-        if (!/^\S+@\S+\.\S+$/.test(value) || value.length < 3 || value.length > 25) {
-          error = "Debe ser un email válido y tener entre 3 y 25 caracteres";
-        }
-        break;
-
-      case "contrasenia":
-        if (value.length < 4 || value.length > 25) {
-          error = "Debe tener entre 4 y 25 caracteres";
-        }
-        break;
-
-      default:
-        break;
+    if (["nombres", "apellido", "usuario"].includes(name)) {
+      error = value.length < 3 || value.length > 25;
     }
 
-    return error;
-  };
+    if (name === "contrasenia") {
+      error = value.length < 4 || value.length > 25;
+    }
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    if (value.length > 25) return;
-
-    setFormData({ ...formData, [name]: value });
-
-    const errorMessage = validateField(name, value);
-    setErrors((prevErrors) => ({
-      ...prevErrors,
-      [name]: errorMessage,
+    setErrors((prev) => ({
+      ...prev,
+      [name]: error,
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    let newErrors = {};
+  const getUser = async () => {
+    try {
+      const res = await fetch(`http://localhost:8080/api`);
+      if (!res.ok) throw new Error("No se pudo obtener el usuario");
 
-    Object.keys(formData).forEach((key) => {
-      const errorMessage = validateField(key, formData[key]);
-      if (errorMessage) {
-        newErrors[key] = errorMessage;
-      }
-    });
+      const data = await res.json();
+      const usuario = data.getOneUser || data.usuario || data;
 
-    setErrors(newErrors);
-
-    if (Object.keys(newErrors).length === 0) {
-      alert("Formulario enviado correctamente");
+      setFormValues({
+        nombres: usuario.nombres || "",
+        apellido: usuario.apellido || "",
+        usuario: usuario.usuario || "",
+        contrasenia: usuario.contrasenia || ""
+      });
+    } catch (error) {
+      console.error("Error obteniendo el usuario:", error);
     }
   };
+
+  const handleClick = async (ev) => {
+    ev.preventDefault();
+
+    if (
+      !formValues.nombres ||
+      !formValues.apellido ||
+      !formValues.usuario ||
+      !formValues.contrasenia
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Todos los campos son obligatorios",
+      });
+      return;
+    }
+
+    try {
+      const res = await fetch(`http://localhost:8080/api`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formValues),
+      });
+
+      if (!res.ok) throw new Error("Error al actualizar el usuario");
+
+      Swal.fire({
+        icon: "success",
+        title: "Usuario actualizado",
+        text: "El usuario se actualizó correctamente",
+      });
+    } catch (error) {
+      console.error("Error actualizando el usuario:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se pudo actualizar el usuario",
+      });
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   return (
     <Container className="mt-4">
       <Row className="justify-content-center">
         <Col md={6}>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="inputNombre">
-              <Form.Label>Ingresar nombres</Form.Label>
+          <Form>
+            <Form.Group controlId="inputNombres">
+              <Form.Label>Nombre del producto</Form.Label>
               <Form.Control
                 type="text"
                 name="nombres"
-                value={formData.nombres}
                 onChange={handleChange}
-                isInvalid={!!errors.nombres}
-                maxLength={25}
+                value={formValues.nombres}
               />
-              <Form.Control.Feedback type="invalid" className="text-danger">
-                {errors.nombres}
-              </Form.Control.Feedback>
+              {errors.nombres && (
+                <small style={{ color: "red" }}>
+                  Se permite entre 3 a 25 caracteres
+                </small>
+              )}
             </Form.Group>
-
-            <Form.Group controlId="inputApellidos" className="mt-3">
-              <Form.Label>Ingresar apellidos</Form.Label>
+            <Form.Group controlId="inputApellido" className="mt-3">
+              <Form.Label>Apellido</Form.Label>
               <Form.Control
                 type="text"
-                name="apellidos"
-                value={formData.apellidos}
+                name="apellido"
                 onChange={handleChange}
-                isInvalid={!!errors.apellidos}
-                maxLength={25}
+                value={formValues.apellido}
               />
-              <Form.Control.Feedback type="invalid" className="text-danger">
-                {errors.apellidos}
-              </Form.Control.Feedback>
+              {errors.apellido && (
+                <small style={{ color: "red" }}>
+                  Se permite entre 3 a 25 caracteres
+                </small>
+              )}
             </Form.Group>
-
             <Form.Group controlId="inputUsuario" className="mt-3">
-              <Form.Label>Ingresar usuario (email)</Form.Label>
+              <Form.Label>Usuario</Form.Label>
               <Form.Control
                 type="email"
                 name="usuario"
-                value={formData.usuario}
                 onChange={handleChange}
-                isInvalid={!!errors.usuario}
-                maxLength={25}
+                value={formValues.usuario}
               />
-              <Form.Control.Feedback type="invalid" className="text-danger">
-                {errors.usuario}
-              </Form.Control.Feedback>
+              {errors.usuario && (
+                <small style={{ color: "red" }}>
+                  El usuario debe tener entre 3 y 25 caracteres
+                </small>
+              )}
             </Form.Group>
-
             <Form.Group controlId="inputContrasenia" className="mt-3">
-              <Form.Label>Ingresar contraseña</Form.Label>
+              <Form.Label>Contrasenia</Form.Label>
               <Form.Control
                 type="password"
                 name="contrasenia"
-                value={formData.contrasenia}
                 onChange={handleChange}
-                isInvalid={!!errors.contrasenia}
-                maxLength={25}
+                value={formValues.contrasenia}
               />
-              <Form.Control.Feedback type="invalid" className="text-danger">
-                {errors.contrasenia}
-              </Form.Control.Feedback>
+              {errors.contrasenia && (
+                <small style={{ color: "red" }}>
+                  Se permite entre 4 a 25 caracteres
+                </small>
+              )}
             </Form.Group>
-
-            <Button type="submit" className="mt-4">Agregar</Button>
+            <Button type="submit" onClick={handleClick} className="mt-4 m-2">
+              Guardar
+            </Button>
           </Form>
         </Col>
+        <Link to={`/CrudUsers`}>
+          <Button variant="warning" className="m-2" size="sm">
+            Atras
+          </Button>
+        </Link>{" "}
       </Row>
     </Container>
   );
-};
+}
 
 export default NewUser;
