@@ -11,6 +11,7 @@ import NewProduct from "../pages/NewProduct";
 import CrudUsers from "../pages/CrudUsers"
 import NewUser from "../pages/NewUser";
 import ProductEdit from "../pages/ProductEdit";
+import UserEdit from "../pages/UserEdit";
 
 
 function RoutesPage() {
@@ -28,6 +29,7 @@ function RoutesPage() {
         <Route path='/CrudUsers' element={<CrudUsers/>}/>
         <Route path='/NewUser' element={<NewUser/>}/>
         <Route path='/ProductEdit/:id' element={<ProductEdit/>}/>
+        <Route path='/UserEdit/:id' element={<UserEdit/>}/>
 
       </Routes>
   );

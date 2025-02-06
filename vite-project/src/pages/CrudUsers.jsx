@@ -20,7 +20,7 @@ const CrudUsers = () => {
 
   return (
     <>
-      <h2 className="text-center mt-4">CRUD de Productos</h2>
+      <h2 className="text-center mt-4">CRUD de Usuarios</h2>
       <Link to='/NewUser'>Nuevo</Link>{' '}
       <Table responsive striped bordered hover className="m-5">
         <thead>
@@ -42,7 +42,9 @@ const CrudUsers = () => {
               <td>{user.usuario}</td>
               <td>${user.contraseña}</td>
               <td>
-                <Button variant="warning" size="sm">Editar</Button>{' '}
+              <Link to={`/UserEdit/${user._id}`}>
+                  <Button variant="warning" size="sm">Editar</Button>
+                </Link>{' '}
                 <Button variant="danger" size="sm">Eliminar</Button>{' '}
               </td>
             </tr>
