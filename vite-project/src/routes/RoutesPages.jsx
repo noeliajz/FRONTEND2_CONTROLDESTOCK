@@ -10,7 +10,7 @@ import CrudProducts from "../pages/CrudProducts";
 import NewProduct from "../pages/NewProduct";
 import CrudUsers from "../pages/CrudUsers"
 import NewUser from "../pages/NewUser";
-
+import ProductEdit from "../pages/ProductEdit";
 
 
 function RoutesPage() {
@@ -27,6 +27,7 @@ function RoutesPage() {
         <Route path='/NewProduct' element={<NewProduct/>}/>
         <Route path='/CrudUsers' element={<CrudUsers/>}/>
         <Route path='/NewUser' element={<NewUser/>}/>
+        <Route path='/ProductEdit' element={<ProductEdit/>}/>
 
       </Routes>
   );
