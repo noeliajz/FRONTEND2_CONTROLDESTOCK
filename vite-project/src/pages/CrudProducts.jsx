@@ -51,7 +51,9 @@ const CrudProducts = () => {
                 />
               </td>
               <td>
-                <Button variant="warning" size="sm">Editar</Button>{' '}
+                <Link to={`/ProductEdit/${product._id}`}>
+                  <Button variant="warning" size="sm">Editar</Button>
+                </Link>{' '}
                 <Button variant="danger" size="sm">Eliminar</Button>{' '}
               </td>
             </tr>
