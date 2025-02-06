@@ -14,6 +14,33 @@ const CrudUsers = () => {
     setusers(data.allUsers || []);
   };
 
+  const deleteUser = async (id) => {
+    const isConfirmed = window.confirm("¿Estás seguro de que deseas eliminar este usuario?");
+    
+    if (isConfirmed) {
+      try {
+        const res = await fetch(`http://localhost:8080/api/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (res.ok) {
+          console.log(`Usuario con id ${id} eliminado`);
+          getAllUsers();  // Recargar la lista de productos después de eliminar
+        } else {
+          const errorData = await res.json();
+          console.error('Error al eliminar el usuario:', errorData);
+          alert(`Error al eliminar el usuario: ${errorData.message || 'Desconocido'}`);
+        }
+      } catch (error) {
+        console.error('Error al eliminar usuario:', error);
+        alert(`Error al eliminar el usuario: ${error.message}`);
+      }
+    }
+  };
+
   useEffect(() => {
     getAllUsers();
   }, []);
@@ -45,7 +72,7 @@ const CrudUsers = () => {
               <Link to={`/UserEdit/${user._id}`}>
                   <Button variant="warning" size="sm">Editar</Button>
                 </Link>{' '}
-                <Button variant="danger" size="sm">Eliminar</Button>{' '}
+                <Button variant="danger" onClick={() => deleteUser(user._id)}  size="sm">Eliminar</Button>{' '}
               </td>
             </tr>
           ))}
