@@ -8,10 +8,46 @@ const CrudProducts = () => {
   const [products, setProducts] = useState([]);
 
   const getAllProducts = async () => {
-    const res = await fetch("http://localhost:8080/api/product");
-    const data = await res.json();
-    setProducts(data.productos || []);
+    try {
+      const res = await fetch("http://localhost:8080/api/product");
+      const data = await res.json();
+      if (res.ok) {
+        setProducts(data.productos || []);
+      } else {
+        console.error('Error al cargar los productos');
+      }
+    } catch (error) {
+      console.error('Error al obtener productos:', error);
+    }
   };
+
+  const deleteProduct = async (id) => {
+    const isConfirmed = window.confirm("¿Estás seguro de que deseas eliminar este producto?");
+    
+    if (isConfirmed) {
+      try {
+        const res = await fetch(`http://localhost:8080/api/product/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (res.ok) {
+          console.log(`Producto con id ${id} eliminado`);
+          getAllProducts();  // Recargar la lista de productos después de eliminar
+        } else {
+          const errorData = await res.json();
+          console.error('Error al eliminar el producto:', errorData);
+          alert(`Error al eliminar el producto: ${errorData.message || 'Desconocido'}`);
+        }
+      } catch (error) {
+        console.error('Error al eliminar producto:', error);
+        alert(`Error al eliminar el producto: ${error.message}`);
+      }
+    }
+  };
+  
 
   useEffect(() => {
     getAllProducts();
@@ -54,7 +90,13 @@ const CrudProducts = () => {
                 <Link to={`/ProductEdit/${product._id}`}>
                   <Button variant="warning" size="sm">Editar</Button>
                 </Link>{' '}
-                <Button variant="danger" size="sm">Eliminar</Button>{' '}
+                <Button 
+                  variant="danger" 
+                  onClick={() => deleteProduct(product._id)} 
+                  size="sm"
+                >
+                  Eliminar
+                </Button>{' '}
               </td>
             </tr>
           ))}

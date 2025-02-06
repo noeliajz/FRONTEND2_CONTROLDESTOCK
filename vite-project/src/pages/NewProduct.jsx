@@ -1,147 +1,220 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Link, NavLink } from "react-router-dom";
 
-const NewProduct = () => {
-  const [formData, setFormData] = useState({
+function NewProduct() {
+  const [formValues, setFormValues] = useState({
     nombre: "",
     precio: "",
     descripcion: "",
     stock: "",
     imagen: "",
+    categoria: "",
   });
 
   const [errors, setErrors] = useState({
-    nombre: "",
-    precio: "",
-    descripcion: "",
-    stock: "",
-    imagen: "",
+    nombre: false,
+    precio: false,
+    descripcion: false,
+    categoria: false,
+    stock: false,
   });
 
-  const validateField = (name, value) => {
-    let error = "";
+  const handleChange = (ev) => {
+    const { name, value } = ev.target;
 
-    if (!value.trim()) {
-      return "Este campo es obligatorio";
+    if (value.length <= 25) {
+      setFormValues((prev) => ({ ...prev, [name]: value }));
     }
 
-    if (name === "precio" || name === "stock") {
+    let error = false;
+
+    if (["nombre", "descripcion", "categoria"].includes(name)) {
+      error = value.length < 3 || value.length > 25;
+    }
+
+    if (["precio", "stock"].includes(name)) {
       const numValue = Number(value);
-      if (isNaN(numValue) || numValue < 1 || numValue > 1000000000) {
-        return "Debe estar entre 1 y 1,000,000,000";
-      }
-    } else if (name !== "imagen") {
-      if (value.length < 3 || value.length > 25) {
-        return "Debe tener entre 3 y 25 caracteres";
-      }
+      error =
+        value.length < 1 ||
+        value.length > 25 ||
+        numValue < 1 ||
+        numValue > 1000000000;
     }
 
-    return error;
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    if (name !== "imagen" && value.length > 25) return;
-
-    setFormData({ ...formData, [name]: value });
-
-    const errorMessage = validateField(name, value);
-    setErrors((prevErrors) => ({
-      ...prevErrors,
-      [name]: errorMessage,
+    setErrors((prev) => ({
+      ...prev,
+      [name]: error,
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    let newErrors = {};
+  const getProduct = async () => {
+    try {
+      const res = await fetch(`http://localhost:8080/api/product/`);
+      if (!res.ok) throw new Error("No se pudo obtener el producto");
 
-    Object.keys(formData).forEach((key) => {
-      const errorMessage = validateField(key, formData[key]);
-      if (errorMessage) {
-        newErrors[key] = errorMessage;
-      }
-    });
+      const data = await res.json();
+      console.log("Producto recibido:", data);
 
-    setErrors(newErrors);
+      const producto = data.obtenerUnProducto || data.producto || data;
 
-    if (Object.keys(newErrors).length === 0) {
-      alert("Producto agregado correctamente");
+      setFormValues({
+        nombre: producto.nombre || "",
+        precio: producto.precio || "",
+        descripcion: producto.descripcion || "",
+        stock: producto.stock || "",
+        imagen: producto.imagen || "",
+        categoria: producto.categoria || "",
+      });
+    } catch (error) {
+      console.error("Error obteniendo el producto:", error);
     }
   };
+
+  const handleClick = async (ev) => {
+    ev.preventDefault();
+
+    if (
+      !formValues.nombre ||
+      !formValues.descripcion ||
+      !formValues.imagen ||
+      !formValues.precio ||
+      !formValues.stock
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Todos los campos son obligatorios",
+      });
+      return;
+    }
+
+    try {
+      const res = await fetch(`http://localhost:8080/api/product`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formValues),
+      });
+
+      if (!res.ok) throw new Error("Error al actualizar el producto");
+
+      Swal.fire({
+        icon: "success",
+        title: "Producto actualizado",
+        text: "El producto se actualizó correctamente",
+      });
+    } catch (error) {
+      console.error("Error actualizando el producto:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se pudo actualizar el producto",
+      });
+    }
+  };
+
+  useEffect(() => {
+    getProduct();
+  }, []);
 
   return (
     <Container className="mt-4">
       <Row className="justify-content-center">
         <Col md={6}>
-          <Form onSubmit={handleSubmit}>
+          <Form>
             <Form.Group controlId="inputNombre">
               <Form.Label>Nombre del producto</Form.Label>
               <Form.Control
                 type="text"
                 name="nombre"
-                value={formData.nombre}
                 onChange={handleChange}
-                isInvalid={!!errors.nombre}
+                value={formValues.nombre}
               />
-              <Form.Text className="text-danger">{errors.nombre}</Form.Text>
+              {errors.nombre && (
+                <small style={{ color: "red" }}>
+                  Se permite entre 3 a 25 caracteres
+                </small>
+              )}
             </Form.Group>
-
             <Form.Group controlId="inputPrecio" className="mt-3">
               <Form.Label>Precio</Form.Label>
               <Form.Control
-                type="text"
+                type="number"
                 name="precio"
-                value={formData.precio}
                 onChange={handleChange}
-                isInvalid={!!errors.precio}
+                value={formValues.precio}
               />
-              <Form.Text className="text-danger">{errors.precio}</Form.Text>
+              {errors.precio && (
+                <small style={{ color: "red" }}>
+                  Debe estar entre 1 y 1,000,000,000
+                </small>
+              )}
             </Form.Group>
-
             <Form.Group controlId="inputDescripcion" className="mt-3">
               <Form.Label>Descripción</Form.Label>
               <Form.Control
                 type="text"
                 name="descripcion"
-                value={formData.descripcion}
                 onChange={handleChange}
-                isInvalid={!!errors.descripcion}
+                value={formValues.descripcion}
               />
-              <Form.Text className="text-danger">{errors.descripcion}</Form.Text>
+              {errors.descripcion && (
+                <small style={{ color: "red" }}>
+                  Se permite entre 3 a 25 caracteres
+                </small>
+              )}
             </Form.Group>
-
             <Form.Group controlId="inputStock" className="mt-3">
               <Form.Label>Stock</Form.Label>
               <Form.Control
-                type="text"
+                type="number"
                 name="stock"
-                value={formData.stock}
                 onChange={handleChange}
-                isInvalid={!!errors.stock}
+                value={formValues.stock}
               />
-              <Form.Text className="text-danger">{errors.stock}</Form.Text>
+              {errors.stock && (
+                <small style={{ color: "red" }}>
+                  Debe estar entre 1 y 1,000,000,000
+                </small>
+              )}
             </Form.Group>
-
             <Form.Group controlId="inputImagen" className="mt-3">
               <Form.Label>Link de imagen</Form.Label>
               <Form.Control
                 type="text"
                 name="imagen"
-                value={formData.imagen}
                 onChange={handleChange}
-                isInvalid={!!errors.imagen}
+                value={formValues.imagen}
               />
-              <Form.Text className="text-danger">{errors.imagen}</Form.Text>
             </Form.Group>
-
-            <Button type="submit" className="mt-4">Agregar</Button>
+            <Form.Group controlId="inputCategoria" className="mt-3">
+              <Form.Label>Categoría</Form.Label>
+              <Form.Control
+                type="text"
+                name="categoria"
+                onChange={handleChange}
+                value={formValues.categoria}
+              />
+              {errors.categoria && (
+                <small style={{ color: "red" }}>
+                  Se permite entre 3 a 25 caracteres
+                </small>
+              )}
+            </Form.Group>
+            <Button type="submit" onClick={handleClick} className="mt-4 m-2">
+              Guardar Cambios
+            </Button>
           </Form>
         </Col>
+        <Link to={`/CrudProducts`}>
+              <Button variant="warning" className="m-2" size="sm">
+                Atras
+              </Button>
+            </Link>{" "}
       </Row>
     </Container>
   );
-};
+}
 
 export default NewProduct;
