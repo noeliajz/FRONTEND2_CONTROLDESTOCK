@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, NavLink } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { Container, Row, Col, Form } from 'react-bootstrap';
 
 function UserEdit() {
   const { id } = useParams();
@@ -9,14 +9,14 @@ function UserEdit() {
     nombres: '',
     apellido: '',
     usuario: '',
-    contrasenia: ''
+    contrasenia: '',
   });
 
   const [errors, setErrors] = useState({
     nombres: false,
     apellido: false,
     usuario: false,
-    contrasenia: false
+    contrasenia: false,
   });
 
   const handleChange = (ev) => {
@@ -32,7 +32,7 @@ function UserEdit() {
       error = value.length < 3 || value.length > 25;
     }
 
-    if (['contrasenia'].includes(name)) {
+    if (name === 'contrasenia') {
       error = value.length < 4 || value.length > 25;
     }
 
@@ -56,7 +56,7 @@ function UserEdit() {
         nombres: usuario.nombre || '',
         apellido: usuario.apellido || '',
         usuario: usuario.usuario || '',
-        contrasenia: usuario.contrasenia || ''
+        contrasenia: usuario.contrasenia || '',
       });
     } catch (error) {
       console.error('Error obteniendo el usuario:', error);
@@ -88,6 +88,8 @@ function UserEdit() {
         icon: 'success',
         title: 'Usuario actualizado',
         text: 'El usuario se actualizó correctamente',
+      }).then(() => {
+        window.location.href = "/CrudUsers"; // Redirige después de la confirmación
       });
     } catch (error) {
       console.error('Error actualizando el usuario:', error);
@@ -104,7 +106,7 @@ function UserEdit() {
   }, [id]);
 
   return (
-    <Container className="mt-4">
+    <Container fluid className="estiloLoginContenedor">
       <Row className="justify-content-center">
         <Col md={6}>
           <Form>
@@ -132,9 +134,9 @@ function UserEdit() {
               {errors.contrasenia && <small style={{ color: 'red' }}>Se permite entre 4 a 25 caracteres</small>}
             </Form.Group>
 
-            <Button type="submit" onClick={handleClick} className="mt-4">
+            <NavLink to="#" className="colorBoton fs-4 " onClick={handleClick}>
               Guardar Cambios
-            </Button>
+            </NavLink>
           </Form>
         </Col>
       </Row>
