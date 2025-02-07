@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import { Link, NavLink } from "react-router-dom";
+import { Container, Row, Col, Form } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
 
 function NewUser() {
   const [formValues, setFormValues] = useState({
@@ -39,25 +39,6 @@ function NewUser() {
       ...prev,
       [name]: error,
     }));
-  };
-
-  const getUser = async () => {
-    try {
-      const res = await fetch(`http://localhost:8080/api`);
-      if (!res.ok) throw new Error("No se pudo obtener el usuario");
-
-      const data = await res.json();
-      const usuario = data.getOneUser || data.usuario || data;
-
-      setFormValues({
-        nombres: usuario.nombres || "",
-        apellido: usuario.apellido || "",
-        usuario: usuario.usuario || "",
-        contrasenia: usuario.contrasenia || ""
-      });
-    } catch (error) {
-      console.error("Error obteniendo el usuario:", error);
-    }
   };
 
   const handleClick = async (ev) => {
@@ -102,16 +83,34 @@ function NewUser() {
   };
 
   useEffect(() => {
+    const getUser = async () => {
+      try {
+        const res = await fetch(`http://localhost:8080/api`);
+        if (!res.ok) throw new Error("No se pudo obtener el usuario");
+
+        const data = await res.json();
+        const usuario = data.getOneUser || data.usuario || data;
+
+        setFormValues({
+          nombres: usuario.nombres || "",
+          apellido: usuario.apellido || "",
+          usuario: usuario.usuario || "",
+          contrasenia: usuario.contrasenia || ""
+        });
+      } catch (error) {
+        console.error("Error obteniendo el usuario:", error);
+      }
+    };
     getUser();
   }, []);
 
   return (
-    <Container className="mt-4">
+    <Container fluid className="estiloLoginContenedor pt-5">
       <Row className="justify-content-center">
         <Col md={6}>
           <Form>
             <Form.Group controlId="inputNombres">
-              <Form.Label>Nombre del producto</Form.Label>
+              <Form.Label>Nombre</Form.Label>
               <Form.Control
                 type="text"
                 name="nombres"
@@ -153,7 +152,7 @@ function NewUser() {
               )}
             </Form.Group>
             <Form.Group controlId="inputContrasenia" className="mt-3">
-              <Form.Label>Contrasenia</Form.Label>
+              <Form.Label>Contraseña</Form.Label>
               <Form.Control
                 type="password"
                 name="contrasenia"
@@ -166,16 +165,16 @@ function NewUser() {
                 </small>
               )}
             </Form.Group>
-            <Button type="submit" onClick={handleClick} className="mt-4 m-2">
+            <NavLink
+              to="#"
+              className=" fs-4 colorBoton"
+              onClick={handleClick}
+            >
               Guardar
-            </Button>
+            </NavLink>
           </Form>
         </Col>
-        <Link to={`/CrudUsers`}>
-          <Button variant="warning" className="m-2" size="sm">
-            Atras
-          </Button>
-        </Link>{" "}
+        <NavLink to="/CrudUsers" className="fs-4 colorBoton">Volver</NavLink>
       </Row>
     </Container>
   );
