@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink , Link} from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import { Container } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faFilePen} from "@fortawesome/free-solid-svg-icons"
 
 const AddProducts = () => {
   const [products, setProducts] = useState([]);
@@ -55,9 +57,11 @@ const AddProducts = () => {
                   />
                 </td>
                 <td>
-                  <Button variant="warning" size="sm">
-                    Editar
-                  </Button>{" "}
+                <Link to={`/ProductEdit/${product._id}`}>
+                    <Button variant="warning" size="sm">
+                    <FontAwesomeIcon icon={faFilePen} beat />
+                    </Button>
+                  </Link>{" "}
                 </td>
               </tr>
             ))}
