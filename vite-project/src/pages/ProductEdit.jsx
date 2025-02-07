@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, NavLink } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { Container, Row, Col, Form } from 'react-bootstrap';
 
 function ProductEdit() {
   const { id } = useParams();
@@ -94,6 +94,8 @@ function ProductEdit() {
         icon: 'success',
         title: 'Producto actualizado',
         text: 'El producto se actualizó correctamente',
+      }).then(() => {
+        window.location.href = "/CrudProducts"; // Redirigir después de actualizar
       });
     } catch (error) {
       console.error('Error actualizando el producto:', error);
@@ -110,7 +112,7 @@ function ProductEdit() {
   }, [id]);
 
   return (
-    <Container className="mt-4">
+    <Container fluid className="estiloLoginContenedor">
       <Row className="justify-content-center">
         <Col md={6}>
           <Form>
@@ -143,9 +145,13 @@ function ProductEdit() {
               <Form.Control type="text" name="categoria" onChange={handleChange} value={formValues.categoria} />
               {errors.categoria && <small style={{ color: 'red' }}>Se permite entre 3 a 25 caracteres</small>}
             </Form.Group>
-            <Button type="submit" onClick={handleClick} className="mt-4">
+            <NavLink
+              to="#"
+              className="colorBoton fs-4 py-3"
+              onClick={handleClick}
+            >
               Guardar Cambios
-            </Button>
+            </NavLink>
           </Form>
         </Col>
       </Row>
