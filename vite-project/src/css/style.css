@@ -1,0 +1,24 @@
+.colorNavbar{
+    background: #080957;
+}
+.colorLetrasNavbar{
+    color:  #DBDBEB;
+    text-shadow: 1px 2px 1px #7577CD;
+}
+.estilosFooter {
+    background-color: #FF6D02;
+    height: 450px;
+    text-decoration: none;
+    list-style: none;
+    color: #080957,
+    padding-top= 12px;
+    margin-top: auto;
+}
+
+.colorCardAllProducts{
+    background: #DBDBEB;
+}
+.linkColorMenu :hover{
+    background: #FF6D02;
+    border-radius: 10px;
+}

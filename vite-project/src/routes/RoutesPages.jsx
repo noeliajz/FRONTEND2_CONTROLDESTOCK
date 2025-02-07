@@ -12,7 +12,8 @@ import CrudUsers from "../pages/CrudUsers"
 import NewUser from "../pages/NewUser";
 import ProductEdit from "../pages/ProductEdit";
 import UserEdit from "../pages/UserEdit";
-
+import Contacto from "../pages/Contacto";
+import Quien from "../pages/Quien"
 
 function RoutesPage() {
   return (
@@ -30,6 +31,8 @@ function RoutesPage() {
         <Route path='/NewUser' element={<NewUser/>}/>
         <Route path='/ProductEdit/:id' element={<ProductEdit/>}/>
         <Route path='/UserEdit/:id' element={<UserEdit/>}/>
+        <Route path='/Contacto' element={<Contacto/>}/>
+        <Route path='/Quien' element={<Quien/>}/>
 
       </Routes>
   );

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import Table from "react-bootstrap/Table";
-import Footer from "../components/Footer";
 import Button from "react-bootstrap/Button";
 
 const AddProducts = () => {
@@ -59,7 +58,6 @@ const AddProducts = () => {
       <div className="text-center">
         <NavLink to="/UserPage" className="btn btn-primary">Aceptar</NavLink>
       </div>
-      <Footer />
     </>
   );
 };
