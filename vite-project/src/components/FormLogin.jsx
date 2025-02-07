@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { useNavigate, NavLink } from "react-router-dom";
+import { Form, Container, Row, Col } from "react-bootstrap";
 
 const FormLogin = () => {
   const navigate = useNavigate();
@@ -15,6 +15,8 @@ const FormLogin = () => {
     usuario: "",
     contrasenia: "",
   });
+
+  const [loading, setLoading] = useState(false);
 
   const validarUsuario = (usuario) => {
     if (usuario.length < 3 || usuario.length > 25) {
@@ -36,7 +38,6 @@ const FormLogin = () => {
 
   const handleChange = (ev) => {
     const { name, value } = ev.target;
-
     if (value.length > 25) return;
 
     setFormInputs({ ...formInputs, [name]: value });
@@ -48,44 +49,40 @@ const FormLogin = () => {
     setErrores({ ...errores, [name]: errorMsg });
   };
 
-  const handleSubmit = async (ev) => {
+  const handleLogin = async (ev) => {
     ev.preventDefault();
 
     const usuarioError = validarUsuario(formInputs.usuario);
     const contraseniaError = validarContrasenia(formInputs.contrasenia);
 
     if (usuarioError || contraseniaError) {
-      setErrores({
-        usuario: usuarioError,
-        contrasenia: contraseniaError,
-      });
+      setErrores({ usuario: usuarioError, contrasenia: contraseniaError });
       return;
     }
 
+    setLoading(true);
     try {
-      const res = await axios.post("http://localhost:8080/api/login", formInputs, {
-        headers: {
-          "Content-Type": "application/json",
-        },
+      await axios.post("http://localhost:8080/api/login", formInputs, {
+        headers: { "Content-Type": "application/json" },
       });
 
       alert("Inicio de sesión exitoso");
-      setTimeout(() => {
-        navigate("/UserPage");
-      }, 3000);
+      setTimeout(() => navigate("/UserPage"), 2000);
     } catch (error) {
       const errorMessage = error.response?.data?.message || "Credenciales incorrectas.";
       alert("Error en el inicio de sesión: " + errorMessage);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <Container fluid>
+    <Container fluid className="estiloLoginContenedor">
       <Row>
         <Col className="d-flex justify-content-center" sm={12} md={10} lg={12}>
-          <Form className="p-5 text-center" onSubmit={handleSubmit}>
+          <Form className="p-5 text-center" onSubmit={handleLogin}>
             <Form.Group controlId="formBasicUsuario">
-              <Form.Label>Ingresar usuario</Form.Label>
+              <Form.Label className="fs-5">Ingresar usuario</Form.Label>
               <Form.Control
                 name="usuario"
                 value={formInputs.usuario}
@@ -93,13 +90,12 @@ const FormLogin = () => {
                 className={errores.usuario ? "form-control is-invalid" : "form-control"}
                 type="text"
                 maxLength={25}
-                placeholder=""
                 required
               />
               {errores.usuario && <Form.Text className="text-danger">{errores.usuario}</Form.Text>}
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Ingresar contraseña</Form.Label>
+              <Form.Label className="fs-5">Ingresar contraseña</Form.Label>
               <Form.Control
                 name="contrasenia"
                 value={formInputs.contrasenia}
@@ -107,14 +103,18 @@ const FormLogin = () => {
                 className={errores.contrasenia ? "form-control is-invalid" : "form-control"}
                 type="password"
                 maxLength={25}
-                placeholder=""
                 required
               />
               {errores.contrasenia && <Form.Text className="text-danger">{errores.contrasenia}</Form.Text>}
             </Form.Group>
-            <Button style={{ background: "#000000", color: "#CCFF01" }} type="submit">
-              Ingresar
-            </Button>
+            <NavLink
+              to="#"
+              className="fs-4 colorBoton nav-link"
+              onClick={handleLogin}
+              style={{ pointerEvents: loading ? "none" : "auto", textAlign: "center" }}
+            >
+              {loading ? "Cargando..." : "Ingresar"}
+            </NavLink>
           </Form>
         </Col>
       </Row>

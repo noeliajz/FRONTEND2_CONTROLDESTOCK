@@ -56,7 +56,7 @@ const AddProducts = () => {
         </tbody>
       </Table>
       <div className="text-center">
-        <NavLink to="/UserPage" className="btn btn-primary">Aceptar</NavLink>
+        <NavLink to="/UserPage" className="colorBoton">Volver</NavLink>
       </div>
     </>
   );

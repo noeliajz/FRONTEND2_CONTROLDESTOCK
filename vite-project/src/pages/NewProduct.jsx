@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import { Link, NavLink } from "react-router-dom";
+import { Container, Row, Col, Form } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
 
 function NewProduct() {
   const [formValues, setFormValues] = useState({
@@ -119,7 +119,7 @@ function NewProduct() {
   }, []);
 
   return (
-    <Container className="mt-4">
+    <Container fluid className="estiloLoginContenedor pt-5">
       <Row className="justify-content-center">
         <Col md={6}>
           <Form>
@@ -202,16 +202,19 @@ function NewProduct() {
                 </small>
               )}
             </Form.Group>
-            <Button type="submit" onClick={handleClick} className="mt-4 m-2">
+
+            <NavLink
+              to="#"
+              className="text-center mt-4  colorBoton fs-4"
+              onClick={handleClick}
+            >
               Guardar Cambios
-            </Button>
+            </NavLink>
           </Form>
         </Col>
-        <Link to={`/CrudProducts`}>
-              <Button variant="warning" className="m-2" size="sm">
-                Atras
-              </Button>
-            </Link>{" "}
+        <NavLink to="/CrudProducts" className="fs-4 colorBoton">
+          Volver
+        </NavLink>
       </Row>
     </Container>
   );

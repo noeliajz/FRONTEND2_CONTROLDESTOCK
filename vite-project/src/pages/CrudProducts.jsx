@@ -55,7 +55,7 @@ const CrudProducts = () => {
   return (
     <>
       <h2 className="text-center mt-4">CRUD de Productos</h2>
-      <Link to='/NewProduct'>Nuevo</Link>{' '}
+      <NavLink to="/NewProduct" className="colorBoton fs-4">Agregar</NavLink>
       <Table responsive striped bordered hover className="m-5">
         <thead>
           <tr>
@@ -102,7 +102,7 @@ const CrudProducts = () => {
         </tbody>
       </Table>
       <div className="text-center">
-        <NavLink to="/UserPage" className="btn btn-primary">Aceptar</NavLink>
+        <NavLink to="/UserPage" className="colorBoton fs-4">Volver</NavLink>
       </div>
     </>
   );
