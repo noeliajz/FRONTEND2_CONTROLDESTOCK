@@ -7,7 +7,6 @@ const Register = () => {
   return (
     <>
       <FormRegister/>
-      <Footer/>
     </>
   )
 }
