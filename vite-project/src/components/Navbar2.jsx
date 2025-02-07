@@ -26,30 +26,30 @@ const Navbar2 = () => {
         <Navbar.Brand className="colorLetrasNavbar fs-3" href="/">Control de stock</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link className="colorLetrasNavbar fs-4" href={role === 'admin' ? '/CrudProducts' : role === 'user' ? '/UserPage' : '/'}>Inicio</Nav.Link>
+          <Nav className="me-auto ">
+            <Nav.Link className="colorLetrasNavbar fs-4 linkColorMenu " href={role === 'admin' ? '/CrudProducts' : role === 'user' ? '/UserPage' : '/'}>Inicio</Nav.Link>
 
             {token && role === 'admin' && (
               <>
-                <Nav.Link  className='colorLetrasNavbar fs-4' href="/CrudProducts">Productos</Nav.Link>
-                <Nav.Link  className='colorLetrasNavbar fs-4' href="/CrudUsers">Usuarios</Nav.Link>
+                <Nav.Link  className='colorLetrasNavbar fs-4 linkColorMenu' href="/CrudProducts">Productos</Nav.Link>
+                <Nav.Link  className='colorLetrasNavbar fs-4 linkColorMenu' href="/CrudUsers">Usuarios</Nav.Link>
               </>
             )}
 
             {!token || role !== 'admin' ? (
               <>
                 <Nav.Link className='colorLetrasNavbar linkColorMenu fs-4' href="/Quien">Quienes somos</Nav.Link>
-                <Nav.Link className='colorLetrasNavbar fs-4' href="/Contacto">Contacto</Nav.Link>
+                <Nav.Link className='colorLetrasNavbar fs-4 linkColorMenu' href="/Contacto">Contacto</Nav.Link>
               </>
             ) : null}
 
             {!token ? (
               <>
-                <Nav.Link className='colorLetrasNavbar fs-4' href="/Login">Login</Nav.Link>
-                <Nav.Link className='colorLetrasNavbar fs-4' href="/Register">Registro</Nav.Link>
+                <Nav.Link className='colorLetrasNavbar fs-4 linkColorMenu' href="/Login">Login</Nav.Link>
+                <Nav.Link className='colorLetrasNavbar fs-4 linkColorMenu' href="/Register">Registro</Nav.Link>
               </>
             ) : (
-              <Nav.Link className="colorLetrasNavbar fs-4" onClick={handleLogout}>Cerrar sesión</Nav.Link>
+              <Nav.Link className="colorLetrasNavbar fs-4 linkColorMenu" onClick={handleLogout}>Cerrar sesión</Nav.Link>
             )}
           </Nav>
         </Navbar.Collapse>

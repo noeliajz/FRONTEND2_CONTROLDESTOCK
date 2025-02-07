@@ -1,9 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Lobster&display=swap');
+
+body {
+    font-family: 'Lobster', cursive;  /* Fuente por defecto */
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 .colorNavbar{
     background: #080957;
 }
 .colorLetrasNavbar{
     color:  #DBDBEB;
-    text-shadow: 1px 2px 1px #7577CD;
+    text-shadow: 3px 2px 3px #7577CD;
+    font-weight: bold;
 }
 .estilosFooter {
     background-color: #FF6D02;
@@ -18,7 +29,19 @@
 .colorCardAllProducts{
     background: #DBDBEB;
 }
-.linkColorMenu :hover{
+.linkColorMenu:hover {
     background: #FF6D02;
     border-radius: 10px;
+    color: #DBDBEB 
 }
+
+.estiloLoginContenedor{
+    background: #DBDBEB
+}
+.colorBoton{
+    color: #FF8303;
+    font-weight: bold;
+    text-shadow: 
+        1px 1px 4px #080957
+}
+

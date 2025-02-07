@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Nav from 'react-bootstrap/Nav';
 
 const FormRegister = () => {
   const navigate = useNavigate();
@@ -70,7 +71,7 @@ const FormRegister = () => {
   };
 
   return (
-    <div className="d-flex py-5 justify-content-center" style={{ background: "#FFFFFF" }}>
+    <div className="d-flex py-5 justify-content-center estiloLoginContenedor">
       <form className="w-50" onSubmit={handleSubmit}>
         <h2 className="form_tittle">Crea una Cuenta</h2>
         <div className="form_container">
@@ -101,14 +102,16 @@ const FormRegister = () => {
               )}
             </div>
           ))}
-          <button 
-            type="submit" 
-            className="btn" 
-            style={{ color: "#CCFF01", background: "#000000" }}
-            onClick={() => console.log("Botón clickeado")}
+          <Nav.Link 
+            className="fs-4 text-center colorBoton nav-link"
+            onClick={(e) => {
+              e.preventDefault(); // Evita la navegación automática
+              handleSubmit(e);
+            }}
           >
             Enviar
-          </button>
+          </Nav.Link>
+
         </div>
       </form>
     </div>
