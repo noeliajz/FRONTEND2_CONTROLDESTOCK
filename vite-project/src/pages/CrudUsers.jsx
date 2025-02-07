@@ -47,7 +47,7 @@ const CrudUsers = () => {
   return (
     <>
       <h2 className="text-center mt-4">CRUD de Usuarios</h2>
-      <Link to='/NewUser'>Nuevo</Link>{' '}
+      <NavLink to='/NewUser' className="fs-4 colorBoton">Agregar</NavLink>{' '}
       <Table responsive striped bordered hover className="m-5">
         <thead>
           <tr>
@@ -78,7 +78,7 @@ const CrudUsers = () => {
         </tbody>
       </Table>
       <div className="text-center">
-        <NavLink to="/UserPage" className="btn btn-primary">Aceptar</NavLink>
+        <NavLink to="/UserPage" className="fs-4 colorBoton">Volver</NavLink>
       </div>
     </>
   );
