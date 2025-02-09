@@ -1,9 +1,15 @@
-import React from 'react'
+import React from 'react';
+import Error404 from '../assets/Error404.jpg';
+import '../css/style.css'; // Importar el CSS
 
 const PaginaError404 = () => {
   return (
     <>
-      <h1>hola</h1>
+      <div className="error-container">
+        <img src={Error404} alt="Error404" className="error-image" />
+      </div>
     </>
-  )}
-export default PaginaError404
+  );
+};
+
+export default PaginaError404;

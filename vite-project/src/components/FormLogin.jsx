@@ -67,7 +67,7 @@ const FormLogin = () => {
       });
 
       alert("Inicio de sesión exitoso");
-      setTimeout(() => navigate("/UserPage"), 2000);
+      setTimeout(() => navigate("/AddProducts"), 2000);
     } catch (error) {
       const errorMessage = error.response?.data?.message || "Credenciales incorrectas.";
       alert("Error en el inicio de sesión: " + errorMessage);

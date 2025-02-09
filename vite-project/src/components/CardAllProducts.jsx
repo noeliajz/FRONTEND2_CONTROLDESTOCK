@@ -30,14 +30,13 @@ function CardAllProducts() {
   }, []);
 
   return (
-    <Container fluid className='colorCardAllProducts'>
+    <Container fluid className='colorCardAllProducts p-5'>
       <Row className="justify-content-center">
         {error ? (
           <p style={{ color: "red" }}>Error: {error}</p>
         ) : (
           products.map((product, index) => (
             <Col key={index} sm={12} md={6} lg={3} className="d-flex justify-content-center mb-4">
-              <h1>ENVIO GRATIS a todo el país a partir de $149.990</h1>
               <Card style={{ width: '18rem' }}>
                 <Card.Img variant="top" src={product.imagen || 'imagen'} />
                 <Card.Body>

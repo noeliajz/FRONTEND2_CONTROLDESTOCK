@@ -45,3 +45,18 @@ body {
         1px 1px 4px #080957
 }
 
+.error-container {
+  width: 100vw; /* 100% del ancho de la pantalla */
+  height: calc(100vh - 70px); /* 100% del alto de la pantalla menos el Navbar */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Evita el scroll horizontal */
+  position: relative; /* Mantiene el div en su lugar */
+}
+
+.error-image {
+  width: 100%; /* Asegura que la imagen ocupe el ancho completo */
+  height: 100%; /* Asegura que la imagen ocupe el alto disponible */
+  object-fit: cover; /* Ajusta la imagen sin deformarla */
+}
