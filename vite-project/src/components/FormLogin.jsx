@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate, NavLink } from "react-router-dom";
 import { Form, Container, Row, Col } from "react-bootstrap";
 
@@ -62,15 +61,27 @@ const FormLogin = () => {
 
     setLoading(true);
     try {
-      await axios.post("http://localhost:8080/api/login", formInputs, {
+      const response = await fetch("http://localhost:8080/api/login", {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formInputs),
       });
 
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Credenciales incorrectas.");
+      }
+
+      const data = await response.json();
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("role", data.role);
       alert("Inicio de sesión exitoso");
+      
+      
       setTimeout(() => navigate("/AddProducts"), 2000);
+      
     } catch (error) {
-      const errorMessage = error.response?.data?.message || "Credenciales incorrectas.";
-      alert("Error en el inicio de sesión: " + errorMessage);
+      alert("Error en el inicio de sesión: " + error.message);
     } finally {
       setLoading(false);
     }
