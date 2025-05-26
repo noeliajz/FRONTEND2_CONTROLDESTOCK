@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react"; // ✅ Importar useContext
 import { useNavigate, NavLink } from "react-router-dom";
 import { Form, Container, Row, Col } from "react-bootstrap";
+import { AuthContext } from "../context/AuthContext"; // ✅ Importar AuthContext
 
 const FormLogin = () => {
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext); // ✅ Obtener la función login del contexto
 
   const [formInputs, setFormInputs] = useState({
     usuario: "",
@@ -73,13 +75,13 @@ const FormLogin = () => {
       }
 
       const data = await response.json();
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("role", data.role);
+
+      // ✅ Usar login del AuthContext
+      login(data.token, data.role);
+
       alert("Inicio de sesión exitoso");
-      
-      
+
       setTimeout(() => navigate("/AddProducts"), 2000);
-      
     } catch (error) {
       alert("Error en el inicio de sesión: " + error.message);
     } finally {
