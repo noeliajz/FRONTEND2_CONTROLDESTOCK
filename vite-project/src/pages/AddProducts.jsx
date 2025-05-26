@@ -31,8 +31,8 @@ const AddProducts = () => {
               <th>Descripción</th>
               <th>Stock</th>
               <th>Precio</th>
-              <th>Fecha de ingreso</th>
               <th>Imagen</th>
+              <th>Fecha de ingresos</th>
             </tr>
           </thead>
           <tbody>
