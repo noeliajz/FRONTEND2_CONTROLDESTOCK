@@ -33,7 +33,6 @@ const AddProducts = () => {
               <th>Precio</th>
               <th>Fecha de ingreso</th>
               <th>Imagen</th>
-              <th>Acción</th>
             </tr>
           </thead>
           <tbody>
@@ -55,13 +54,6 @@ const AddProducts = () => {
                       objectFit: "cover",
                     }}
                   />
-                </td>
-                <td>
-                <Link to={`/ProductEdit/${product._id}`}>
-                    <Button variant="warning" size="sm">
-                    <FontAwesomeIcon icon={faFilePen} beat />
-                    </Button>
-                  </Link>{" "}
                 </td>
               </tr>
             ))}
