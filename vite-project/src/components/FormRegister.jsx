@@ -57,6 +57,7 @@ const FormRegister = () => {
       await axios.post("http://localhost:8080/api", formInputs, {
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `${token}`
         },
       });
 

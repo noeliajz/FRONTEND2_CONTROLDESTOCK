@@ -6,7 +6,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import '../css/style.css';
 
-function Navbar2() {
+function Navbar2({Login, LoginAuth, auth}) {
   const navigate = useNavigate();
   const { token, role, logout } = useContext(AuthContext);
 
