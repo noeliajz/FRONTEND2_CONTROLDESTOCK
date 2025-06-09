@@ -9,9 +9,10 @@ function NewProduct() {
     precio: "",
     descripcion: "",
     stock: "",
-    imagen: "",
     categoria: "",
   });
+
+  const [imagenFile, setImagenFile] = useState(null);
 
   const [errors, setErrors] = useState({
     nombre: false,
@@ -55,8 +56,6 @@ function NewProduct() {
       if (!res.ok) throw new Error("No se pudo obtener el producto");
 
       const data = await res.json();
-      console.log("Producto recibido:", data);
-
       const producto = data.obtenerUnProducto || data.producto || data;
 
       setFormValues({
@@ -64,7 +63,6 @@ function NewProduct() {
         precio: producto.precio || "",
         descripcion: producto.descripcion || "",
         stock: producto.stock || "",
-        imagen: producto.imagen || "",
         categoria: producto.categoria || "",
       });
     } catch (error) {
@@ -74,11 +72,12 @@ function NewProduct() {
 
   const handleClick = async (ev) => {
     ev.preventDefault();
+    const token = localStorage.getItem('token');
 
     if (
       !formValues.nombre ||
       !formValues.descripcion ||
-      !formValues.imagen ||
+      !imagenFile ||
       !formValues.precio ||
       !formValues.stock
     ) {
@@ -91,10 +90,20 @@ function NewProduct() {
     }
 
     try {
+      const formData = new FormData();
+      formData.append("nombre", formValues.nombre);
+      formData.append("precio", formValues.precio);
+      formData.append("descripcion", formValues.descripcion);
+      formData.append("stock", formValues.stock);
+      formData.append("categoria", formValues.categoria);
+      formData.append("imagen", imagenFile);
+
       const res = await fetch(`http://localhost:8080/api/product`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formValues),
+        headers: {
+         'authorization': `Bearer ${token}`,
+        },
+        body: formData,
       });
 
       if (!res.ok) throw new Error("Error al actualizar el producto");
@@ -179,15 +188,16 @@ function NewProduct() {
                 </small>
               )}
             </Form.Group>
-            <Form.Group controlId="inputImagen" className="mt-3">
-              <Form.Label>Link de imagen</Form.Label>
+
+            <Form.Group controlId="archivoImagen" className="mt-3">
+              <Form.Label>Archivo de Imagen</Form.Label>
               <Form.Control
-                type="text"
-                name="imagen"
-                onChange={handleChange}
-                value={formValues.imagen}
+                type="file"
+                accept="image/*"
+                onChange={(e) => setImagenFile(e.target.files[0])}
               />
             </Form.Group>
+
             <Form.Group controlId="inputCategoria" className="mt-3">
               <Form.Label>Categoría</Form.Label>
               <Form.Control
@@ -205,7 +215,7 @@ function NewProduct() {
 
             <NavLink
               to="#"
-              className="text-center mt-4  colorBoton fs-4"
+              className="text-center mt-4 colorBoton fs-4"
               onClick={handleClick}
             >
               Guardar Cambios

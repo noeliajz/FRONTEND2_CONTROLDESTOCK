@@ -5,47 +5,40 @@ import Button from "react-bootstrap/Button";
 import { Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import {faFilePen} from "@fortawesome/free-solid-svg-icons"
+import { faFilePen } from "@fortawesome/free-solid-svg-icons";
 
 const CrudUsers = () => {
   const [users, setusers] = useState([]);
 
   const getAllUsers = async () => {
-    const res = await fetch("http://localhost:8080/api");
+    const token = localStorage.getItem('token');
+    const res = await fetch("http://localhost:8080/api", {
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': `${token}`
+      }
+    });
     const data = await res.json();
-    console.log(data.allUsers);
     setusers(data.allUsers || []);
   };
 
   const deleteUser = async (id) => {
-    const isConfirmed = window.confirm(
-      "¿Estás seguro de que deseas eliminar este usuario?"
-    );
-
+    const isConfirmed = window.confirm("¿Estás seguro de que deseas eliminar este usuario?");
     if (isConfirmed) {
-      try {
-        const res = await fetch(`http://localhost:8080/api/${id}`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-
-        if (res.ok) {
-          console.log(`Usuario con id ${id} eliminado`);
-          getAllUsers(); // Recargar la lista de productos después de eliminar
-        } else {
-          const errorData = await res.json();
-          console.error("Error al eliminar el usuario:", errorData);
-          alert(
-            `Error al eliminar el usuario: ${
-              errorData.message || "Desconocido"
-            }`
-          );
-        }
-      } catch (error) {
-        console.error("Error al eliminar usuario:", error);
-        alert(`Error al eliminar el usuario: ${error.message}`);
+      const token = localStorage.getItem('token');
+      const res = await fetch(`http://localhost:8080/api/${id}`, {
+        method: "DELETE",
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`
+        },
+      });
+      if (res.ok) {
+        getAllUsers();
+      } else {
+        const errorData = await res.json();
+        alert(`Error al eliminar el usuario: ${errorData.message || "Desconocido"}`);
       }
     }
   };
@@ -68,7 +61,7 @@ const CrudUsers = () => {
               <th>Nombres</th>
               <th>Apellido</th>
               <th>Usuario</th>
-              <th>Contraseña</th>
+              <th>Contrasenia</th>
               <th>Acción</th>
             </tr>
           </thead>
@@ -83,7 +76,7 @@ const CrudUsers = () => {
                 <td>
                   <Link to={`/UserEdit/${user._id}`}>
                     <Button variant="warning" size="sm">
-                    <FontAwesomeIcon icon={faFilePen} beat />
+                      <FontAwesomeIcon icon={faFilePen} beat />
                     </Button>
                   </Link>{" "}
                   <Button
@@ -91,7 +84,7 @@ const CrudUsers = () => {
                     onClick={() => deleteUser(user._id)}
                     size="sm"
                   >
-                  <FontAwesomeIcon icon={faTrashCan} beat />
+                    <FontAwesomeIcon icon={faTrashCan} beat />
                   </Button>{" "}
                 </td>
               </tr>

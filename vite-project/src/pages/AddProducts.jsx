@@ -1,19 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { NavLink , Link} from "react-router-dom";
 import Table from "react-bootstrap/Table";
-import Button from "react-bootstrap/Button";
 import { Container } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faFilePen} from "@fortawesome/free-solid-svg-icons"
 
 const AddProducts = () => {
   const [products, setProducts] = useState([]);
 
-  const getAllProducts = async () => {
-    const res = await fetch("http://localhost:8080/api/product");
+const getAllProducts = async () => {
+  const token = localStorage.getItem("token");
+
+  try {
+    const res = await fetch("http://localhost:8080/api/product", {
+      method: "GET",
+      headers: {
+        "Authorization": `${token}`, // 🔑 Lo más importante
+        "Content-Type": "application/json"
+      }
+    });
+
+    if (!res.ok) {
+      throw new Error(`Error HTTP: ${res.status}`);
+    }
+
     const data = await res.json();
     setProducts(data.productos || []);
-  };
+  } catch (error) {
+    console.error("Error obteniendo productos:", error);
+  }
+};
+
 
   useEffect(() => {
     getAllProducts();
@@ -31,8 +46,8 @@ const AddProducts = () => {
               <th>Descripción</th>
               <th>Stock</th>
               <th>Precio</th>
-              <th>Imagen</th>
               <th>Fecha de ingresos</th>
+              <th>Imagen</th>
             </tr>
           </thead>
           <tbody>

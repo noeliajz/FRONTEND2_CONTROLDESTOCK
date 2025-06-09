@@ -37,7 +37,7 @@ function NewUser() {
 
     setErrors((prev) => ({
       ...prev,
-      [name]: error,
+      [name]: error
     }));
   };
 
@@ -53,56 +53,41 @@ function NewUser() {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Todos los campos son obligatorios",
+        text: "Todos los campos son obligatorios"
       });
       return;
     }
 
     try {
-      const res = await fetch(`http://localhost:8080/api`, {
+      const res = await fetch(`http://localhost:8080/api/users`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formValues),
+        body: JSON.stringify(formValues)
       });
 
-      if (!res.ok) throw new Error("Error al actualizar el usuario");
+      if (!res.ok) throw new Error("Error al guardar el usuario");
 
       Swal.fire({
         icon: "success",
-        title: "Usuario actualizado",
-        text: "El usuario se actualizó correctamente",
+        title: "Usuario guardado",
+        text: "El usuario se guardó correctamente"
+      });
+
+      setFormValues({
+        nombres: "",
+        apellido: "",
+        usuario: "",
+        contrasenia: ""
       });
     } catch (error) {
-      console.error("Error actualizando el usuario:", error);
+      console.error("Error guardando el usuario:", error);
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: "No se pudo actualizar el usuario",
+        text: "No se pudo guardar el usuario"
       });
     }
   };
-
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const res = await fetch(`http://localhost:8080/api`);
-        if (!res.ok) throw new Error("No se pudo obtener el usuario");
-
-        const data = await res.json();
-        const usuario = data.getOneUser || data.usuario || data;
-
-        setFormValues({
-          nombres: usuario.nombres || "",
-          apellido: usuario.apellido || "",
-          usuario: usuario.usuario || "",
-          contrasenia: usuario.contrasenia || ""
-        });
-      } catch (error) {
-        console.error("Error obteniendo el usuario:", error);
-      }
-    };
-    getUser();
-  }, []);
 
   return (
     <Container fluid className="estiloLoginContenedor pt-5">
@@ -167,7 +152,7 @@ function NewUser() {
             </Form.Group>
             <NavLink
               to="#"
-              className=" fs-4 colorBoton"
+              className="fs-4 colorBoton"
               onClick={handleClick}
             >
               Guardar

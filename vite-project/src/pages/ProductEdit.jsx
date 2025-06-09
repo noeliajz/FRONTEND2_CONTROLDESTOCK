@@ -10,58 +10,32 @@ function ProductEdit() {
     precio: '',
     descripcion: '',
     stock: '',
-    imagen: '',
     categoria: '',
   });
+  const [imagenFile, setImagenFile] = useState(null);
 
-  const [errors, setErrors] = useState({
-    nombre: false,
-    precio: false,
-    descripcion: false,
-    categoria: false,
-    stock: false,
-  });
-
-  const handleChange = (ev) => {
-    const { name, value } = ev.target;
-
-    if (value.length <= 25) {
-      setFormValues((prev) => ({ ...prev, [name]: value }));
-    }
-
-    let error = false;
-
-    if (['nombre', 'descripcion', 'categoria'].includes(name)) {
-      error = value.length < 3 || value.length > 25;
-    }
-
-    if (['precio', 'stock'].includes(name)) {
-      const numValue = Number(value);
-      error = value.length < 1 || value.length > 25 || numValue < 1 || numValue > 1000000000;
-    }
-
-    setErrors((prev) => ({
-      ...prev,
-      [name]: error,
-    }));
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues((prev) => ({ ...prev, [name]: value }));
   };
 
   const getProduct = async () => {
+    const token = JSON.parse(localStorage.getItem('token'))
     try {
-      const res = await fetch(`http://localhost:8080/api/product/${id}`);
-      if (!res.ok) throw new Error('No se pudo obtener el producto');
-
+      const res = await fetch(`http://localhost:8080/api/product/${id}`,{
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          'authorization': `Bearer ${token}`
+        }  
+      });
       const data = await res.json();
-      console.log('Producto recibido:', data);
-
       const producto = data.obtenerUnProducto || data.producto || data;
-
       setFormValues({
         nombre: producto.nombre || '',
         precio: producto.precio || '',
         descripcion: producto.descripcion || '',
         stock: producto.stock || '',
-        imagen: producto.imagen || '',
         categoria: producto.categoria || '',
       });
     } catch (error) {
@@ -69,41 +43,41 @@ function ProductEdit() {
     }
   };
 
-  const handleClick = async (ev) => {
-    ev.preventDefault();
-
-    if (!formValues.nombre || !formValues.descripcion || !formValues.imagen || !formValues.precio || !formValues.stock) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Todos los campos son obligatorios',
-      });
+  const handleClick = async (e) => {
+    e.preventDefault();
+    const token = JSON.parse(localStorage.getItem('token'))
+    if (!formValues.nombre.trim()) {
+      Swal.fire('Error', 'El nombre del producto es obligatorio', 'error');
       return;
+    }
+    const formData = new FormData();
+    formData.append('nombre', formValues.nombre);
+    formData.append('precio', parseFloat(formValues.precio));
+    formData.append('descripcion', formValues.descripcion);
+    formData.append('stock', parseInt(formValues.stock));
+    formData.append('categoria', formValues.categoria);
+    if (imagenFile) {
+      formData.append('imagen', imagenFile);
     }
 
     try {
       const res = await fetch(`http://localhost:8080/api/product/${id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formValues),
+        headers: {
+        'authorization': `Bearer ${token}`,
+        },
+        body: formData,
       });
 
-      if (!res.ok) throw new Error('Error al actualizar el producto');
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.mensaje || 'Error al actualizar el producto');
 
-      Swal.fire({
-        icon: 'success',
-        title: 'Producto actualizado',
-        text: 'El producto se actualizó correctamente',
-      }).then(() => {
-        window.location.href = "/CrudProducts"; // Redirigir después de actualizar
+      Swal.fire('Éxito', 'Producto actualizado correctamente', 'success').then(() => {
+        window.location.href = '/CrudProducts';
       });
     } catch (error) {
       console.error('Error actualizando el producto:', error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'No se pudo actualizar el producto',
-      });
+      Swal.fire('Error', 'No se pudo actualizar el producto', 'error');
     }
   };
 
@@ -119,37 +93,28 @@ function ProductEdit() {
             <Form.Group controlId="inputNombre">
               <Form.Label>Nombre del producto</Form.Label>
               <Form.Control type="text" name="nombre" onChange={handleChange} value={formValues.nombre} />
-              {errors.nombre && <small style={{ color: 'red' }}>Se permite entre 3 a 25 caracteres</small>}
             </Form.Group>
             <Form.Group controlId="inputPrecio" className="mt-3">
               <Form.Label>Precio</Form.Label>
               <Form.Control type="number" name="precio" onChange={handleChange} value={formValues.precio} />
-              {errors.precio && <small style={{ color: 'red' }}>Debe estar entre 1 y 1,000,000,000</small>}
             </Form.Group>
             <Form.Group controlId="inputDescripcion" className="mt-3">
               <Form.Label>Descripción</Form.Label>
               <Form.Control type="text" name="descripcion" onChange={handleChange} value={formValues.descripcion} />
-              {errors.descripcion && <small style={{ color: 'red' }}>Se permite entre 3 a 25 caracteres</small>}
             </Form.Group>
             <Form.Group controlId="inputStock" className="mt-3">
               <Form.Label>Stock</Form.Label>
               <Form.Control type="number" name="stock" onChange={handleChange} value={formValues.stock} />
-              {errors.stock && <small style={{ color: 'red' }}>Debe estar entre 1 y 1,000,000,000</small>}
             </Form.Group>
             <Form.Group controlId="inputImagen" className="mt-3">
-              <Form.Label>Link de imagen</Form.Label>
-              <Form.Control type="text" name="imagen" onChange={handleChange} value={formValues.imagen} />
+              <Form.Label>Imagen</Form.Label>
+              <Form.Control type="file" accept="image/*" onChange={(e) => setImagenFile(e.target.files[0])} />
             </Form.Group>
             <Form.Group controlId="inputCategoria" className="mt-3">
               <Form.Label>Categoría</Form.Label>
               <Form.Control type="text" name="categoria" onChange={handleChange} value={formValues.categoria} />
-              {errors.categoria && <small style={{ color: 'red' }}>Se permite entre 3 a 25 caracteres</small>}
             </Form.Group>
-            <NavLink
-              to="#"
-              className="colorBoton fs-4 py-3"
-              onClick={handleClick}
-            >
+            <NavLink to="#" className="colorBoton fs-4 py-3" onClick={handleClick}>
               Guardar Cambios
             </NavLink>
           </Form>
