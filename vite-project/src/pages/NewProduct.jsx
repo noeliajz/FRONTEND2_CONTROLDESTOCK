@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Swal from "sweetalert2";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
@@ -11,9 +11,7 @@ function NewProduct() {
     stock: "",
     categoria: "",
   });
-
   const [imagenFile, setImagenFile] = useState(null);
-
   const [errors, setErrors] = useState({
     nombre: false,
     precio: false,
@@ -24,17 +22,13 @@ function NewProduct() {
 
   const handleChange = (ev) => {
     const { name, value } = ev.target;
-
     if (value.length <= 25) {
       setFormValues((prev) => ({ ...prev, [name]: value }));
     }
-
     let error = false;
-
     if (["nombre", "descripcion", "categoria"].includes(name)) {
       error = value.length < 3 || value.length > 25;
     }
-
     if (["precio", "stock"].includes(name)) {
       const numValue = Number(value);
       error =
@@ -43,43 +37,22 @@ function NewProduct() {
         numValue < 1 ||
         numValue > 1000000000;
     }
-
     setErrors((prev) => ({
       ...prev,
       [name]: error,
     }));
   };
 
-  const getProduct = async () => {
-    try {
-      const res = await fetch(`http://localhost:8080/api/product/`);
-      if (!res.ok) throw new Error("No se pudo obtener el producto");
-
-      const data = await res.json();
-      const producto = data.obtenerUnProducto || data.producto || data;
-
-      setFormValues({
-        nombre: producto.nombre || "",
-        precio: producto.precio || "",
-        descripcion: producto.descripcion || "",
-        stock: producto.stock || "",
-        categoria: producto.categoria || "",
-      });
-    } catch (error) {
-      console.error("Error obteniendo el producto:", error);
-    }
-  };
-
   const handleClick = async (ev) => {
     ev.preventDefault();
     const token = localStorage.getItem('token');
-
     if (
       !formValues.nombre ||
       !formValues.descripcion ||
       !imagenFile ||
       !formValues.precio ||
-      !formValues.stock
+      !formValues.stock ||
+      !formValues.categoria
     ) {
       Swal.fire({
         icon: "error",
@@ -88,7 +61,6 @@ function NewProduct() {
       });
       return;
     }
-
     try {
       const formData = new FormData();
       formData.append("nombre", formValues.nombre);
@@ -101,31 +73,26 @@ function NewProduct() {
       const res = await fetch(`http://localhost:8080/api/product`, {
         method: "POST",
         headers: {
-         'authorization': `Bearer ${token}`,
+          "Content-Type": "application/json",
+          'Authorization': `${token}`
         },
         body: formData,
       });
-
-      if (!res.ok) throw new Error("Error al actualizar el producto");
-
+      if (!res.ok) throw new Error("Error al crear el producto");
       Swal.fire({
         icon: "success",
-        title: "Producto actualizado",
-        text: "El producto se actualizó correctamente",
+        title: "Producto creado",
+        text: "El producto se creó correctamente",
       });
     } catch (error) {
-      console.error("Error actualizando el producto:", error);
+      console.error("Error creando el producto:", error);
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: "No se pudo actualizar el producto",
+        text: "No se pudo crear el producto",
       });
     }
   };
-
-  useEffect(() => {
-    getProduct();
-  }, []);
 
   return (
     <Container fluid className="estiloLoginContenedor pt-5">

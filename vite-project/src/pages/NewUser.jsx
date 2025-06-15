@@ -43,7 +43,7 @@ function NewUser() {
 
   const handleClick = async (ev) => {
     ev.preventDefault();
-
+    const token = localStorage.getItem('token')
     if (
       !formValues.nombres ||
       !formValues.apellido ||
@@ -59,9 +59,12 @@ function NewUser() {
     }
 
     try {
-      const res = await fetch(`http://localhost:8080/api/users`, {
+      const res = await fetch(`http://localhost:8080/api`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          'Authorization': `${token}`
+         },
         body: JSON.stringify(formValues)
       });
 

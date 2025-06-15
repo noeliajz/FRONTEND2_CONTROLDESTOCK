@@ -20,14 +20,14 @@ function ProductEdit() {
   };
 
   const getProduct = async () => {
-    const token = JSON.parse(localStorage.getItem('token'))
+    const token = localStorage.getItem('token');
     try {
-      const res = await fetch(`http://localhost:8080/api/product/${id}`,{
+      const res = await fetch(`http://localhost:8080/api/product/${id}`, {
         method: 'GET',
         headers: {
           'content-type': 'application/json',
-          'authorization': `Bearer ${token}`
-        }  
+          'Authorization': `${token}`
+        }
       });
       const data = await res.json();
       const producto = data.obtenerUnProducto || data.producto || data;
@@ -45,11 +45,12 @@ function ProductEdit() {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    const token = JSON.parse(localStorage.getItem('token'))
+    const token = localStorage.getItem('token');
     if (!formValues.nombre.trim()) {
       Swal.fire('Error', 'El nombre del producto es obligatorio', 'error');
       return;
     }
+
     const formData = new FormData();
     formData.append('nombre', formValues.nombre);
     formData.append('precio', parseFloat(formValues.precio));
@@ -64,7 +65,7 @@ function ProductEdit() {
       const res = await fetch(`http://localhost:8080/api/product/${id}`, {
         method: 'PUT',
         headers: {
-        'authorization': `Bearer ${token}`,
+          'Authorization': `${token}`
         },
         body: formData,
       });
