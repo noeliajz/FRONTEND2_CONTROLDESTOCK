@@ -13,7 +13,14 @@ function CardAllProducts() {
   useEffect(() => {
     const getAllProducts = async () => {
       try {
-        const res = await fetch("http://localhost:8080/api/product");
+        const token = localStorage.getItem('token');
+        const res = await fetch("http://localhost:8080/api/product",{
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`
+        }}
+        );
 
         if (!res.ok) {
           throw new Error(`Error HTTP: ${res.status}`);
