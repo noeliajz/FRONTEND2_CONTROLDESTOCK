@@ -12,7 +12,7 @@ const CrudProducts = () => {
   const getAllProducts = async () => {
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch("http://localhost:8080/api/product", {
+      const res = await fetch("http://localhost:3000/api/product", {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ const CrudProducts = () => {
     const isConfirmed = window.confirm("¿Estás seguro de que deseas eliminar este producto?");
     if (isConfirmed) {
       try {
-        const res = await fetch(`http://localhost:8080/api/product/${id}`, {
+        const res = await fetch(`http://localhost:3000/api/product/${id}`, {
           method: "DELETE",
           headers: {
             'Content-Type': 'application/json',
@@ -90,7 +90,7 @@ const CrudProducts = () => {
               <td>{new Date(product.fecha).toLocaleDateString()}</td>
               <td>
                 <img
-                  src={`http://localhost:8080/${product.imagen}`}
+                  src={`http://localhost:3000/${product.imagen}`}
                   alt={product.nombre}
                   style={{
                     width: "50px",

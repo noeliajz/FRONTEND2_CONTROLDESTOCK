@@ -14,7 +14,7 @@ function CardAllProducts() {
     const getAllProducts = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch("http://localhost:8080/api/product",{
+        const res = await fetch("http://localhost:3000/api/product",{
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

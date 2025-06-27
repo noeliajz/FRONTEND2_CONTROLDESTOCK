@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import Nav from 'react-bootstrap/Nav';
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import Nav from "react-bootstrap/Nav";
 
 const FormRegister = () => {
   const navigate = useNavigate();
@@ -24,18 +24,17 @@ const FormRegister = () => {
 
   const handleChange = (ev) => {
     const { name, value } = ev.target;
-    
+
     if (value.length > 25) return;
 
     setFormInputs((prev) => ({ ...prev, [name]: value }));
 
-    const isInvalid = (
+    const isInvalid =
       (name === "nombres" && (value.length < 3 || value.length > 25)) ||
       (name === "apellido" && (value.length < 3 || value.length > 25)) ||
       (name === "usuario" && (value.length < 3 || value.length > 25)) ||
       (name === "contrasenia" && (value.length < 4 || value.length > 25)) ||
-      (name === "repetirContrasenia" && value !== formInputs.contrasenia)
-    );
+      (name === "repetirContrasenia" && value !== formInputs.contrasenia);
 
     setErrors((prev) => ({ ...prev, [name]: isInvalid }));
   };
@@ -43,31 +42,42 @@ const FormRegister = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (Object.values(errors).some((err) => err) || 
-        formInputs.nombres.length < 3 ||
-        formInputs.apellido.length < 3 ||
-        formInputs.usuario.length < 3 || 
-        formInputs.contrasenia.length < 4 ||
-        formInputs.contrasenia !== formInputs.repetirContrasenia) {
+    if (
+      Object.values(errors).some((err) => err) ||
+      formInputs.nombres.length < 3 ||
+      formInputs.apellido.length < 3 ||
+      formInputs.usuario.length < 3 ||
+      formInputs.contrasenia.length < 4 ||
+      formInputs.contrasenia !== formInputs.repetirContrasenia
+    ) {
       alert("Por favor, completa los campos correctamente.");
       return;
     }
 
     try {
-      await axios.post("http://localhost:8080/api", formInputs, {
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `${token}`
-        },
-      });
+      const response = await axios.post(
+        "http://localhost:3000/api",
+        formInputs,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       alert("Registro exitoso");
       setTimeout(() => {
         navigate("/Login");
       }, 3000);
     } catch (error) {
-      const errorMessage = error.response?.data?.message || "Ocurrió un error desconocido. Intente nuevamente.";
-      alert("Error en el registro: " + errorMessage);
+      if (Array.isArray(error.response?.data?.msg)) {
+        alert(error.response.data.msg.map((e) => e.msg).join("\n"));
+      } else {
+        alert(
+          "Error en el registro: " +
+            (error.response?.data?.msg || "Error desconocido.")
+        );
+      }
     }
   };
 
@@ -80,11 +90,21 @@ const FormRegister = () => {
             { name: "nombres", label: "Ingresar nombres", type: "text" },
             { name: "apellido", label: "Ingresar apellidos", type: "text" },
             { name: "usuario", label: "Ingresar usuario", type: "text" },
-            { name: "contrasenia", label: "Ingresar contraseña", type: "password" },
-            { name: "repetirContrasenia", label: "Repetir contraseña", type: "password" }
+            {
+              name: "contrasenia",
+              label: "Ingresar contraseña",
+              type: "password",
+            },
+            {
+              name: "repetirContrasenia",
+              label: "Repetir contraseña",
+              type: "password",
+            },
           ].map(({ name, label, type }) => (
             <div className="mb-3" key={name}>
-              <label htmlFor={name} className="form-label">{label}</label>
+              <label htmlFor={name} className="form-label">
+                {label}
+              </label>
               <input
                 type={type}
                 name={name}
@@ -98,21 +118,16 @@ const FormRegister = () => {
               />
               {errors[name] && (
                 <div className="invalid-feedback">
-                  {name === "repetirContrasenia" ? "Las contraseñas no coinciden." : "Debe tener entre 3 y 25 caracteres."}
+                  {name === "repetirContrasenia"
+                    ? "Las contraseñas no coinciden."
+                    : "Debe tener entre 3 y 25 caracteres."}
                 </div>
               )}
             </div>
           ))}
-          <Nav.Link 
-            className="fs-4 text-center colorBoton nav-link"
-            onClick={(e) => {
-              e.preventDefault(); // Evita la navegación automática
-              handleSubmit(e);
-            }}
-          >
+          <button type="submit" className="btn btn-primary w-100">
             Enviar
-          </Nav.Link>
-
+          </button>
         </div>
       </form>
     </div>

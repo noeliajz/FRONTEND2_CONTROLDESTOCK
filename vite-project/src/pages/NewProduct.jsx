@@ -69,11 +69,9 @@ function NewProduct() {
       formData.append("stock", formValues.stock);
       formData.append("categoria", formValues.categoria);
       formData.append("imagen", imagenFile);
-
-      const res = await fetch(`http://localhost:8080/api/product`, {
+      const res = await fetch(`http://localhost:3000/api/product`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
           'Authorization': `${token}`
         },
         body: formData,

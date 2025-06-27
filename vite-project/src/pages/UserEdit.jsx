@@ -42,7 +42,7 @@ function UserEdit() {
 
   const getUser = async () => {
     const token = localStorage.getItem('token');
-    const res = await fetch(`http://localhost:8080/api/${id}`, {
+    const res = await fetch(`http://localhost:3000/api/${id}`, {
       method: 'GET',
       headers: {
         'content-type': 'application/json',
@@ -85,7 +85,7 @@ function UserEdit() {
       contrasenia
     };
 
-    const res = await fetch(`http://localhost:8080/api/${id}`, {
+    const res = await fetch(`http://localhost:3000/api/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
