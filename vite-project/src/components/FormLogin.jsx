@@ -65,7 +65,8 @@ const FormLogin = () => {
     try {
       const response = await fetch("http://localhost:3000/api/login", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json" },
         body: JSON.stringify(formInputs),
       });
 
@@ -75,13 +76,9 @@ const FormLogin = () => {
       }
 
       const data = await response.json();
-
-      // ✅ Usar login del AuthContext
       login(data.token, data.role);
-
       alert("Inicio de sesión exitoso");
-
-      setTimeout(() => navigate("/AddProducts"), 2000);
+      setTimeout(() => navigate("/CrudProducts"), 2000);
     } catch (error) {
       alert("Error en el inicio de sesión: " + error.message);
     } finally {

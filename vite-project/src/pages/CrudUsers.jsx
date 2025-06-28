@@ -92,7 +92,7 @@ const CrudUsers = () => {
           </tbody>
         </Table>
         <div className="text-center">
-          <NavLink to="/UserPage" className="fs-4 colorBoton">
+          <NavLink to="/" className="fs-4 colorBoton">
             Volver
           </NavLink>
         </div>

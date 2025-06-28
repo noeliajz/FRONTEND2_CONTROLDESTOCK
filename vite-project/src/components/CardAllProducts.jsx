@@ -13,14 +13,14 @@ function CardAllProducts() {
   useEffect(() => {
     const getAllProducts = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const res = await fetch("http://localhost:3000/api/product",{
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `${token}`
-        }}
-        );
+        const token = localStorage.getItem("token");
+        const res = await fetch("http://localhost:3000/api/product", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `${token}`,
+          },
+        });
 
         if (!res.ok) {
           throw new Error(`Error HTTP: ${res.status}`);
@@ -32,7 +32,7 @@ function CardAllProducts() {
         }
 
         setProducts(data.productos);
-        setFilteredProducts(data.productos); 
+        setFilteredProducts(data.productos);
       } catch (err) {
         console.error("Error obteniendo productos:", err.message);
         setError(err.message);
@@ -42,61 +42,54 @@ function CardAllProducts() {
     getAllProducts();
   }, []);
 
-  const handleSearch = (event) => {
-    event.preventDefault(); 
+  const handleInputChange = (e) => {
+    const categoriaSeleccionada = e.target.value;
+    setSearchCategory(categoriaSeleccionada);
 
-    const categoriaBuscada = searchCategory.trim().toLowerCase();
-
-    if (categoriaBuscada === "") {
-      setError("El campo de búsqueda no puede estar vacío.");
-      setFilteredProducts([]); 
-      return;
-    }
-
-    const categoriasValidas = ["hombre", "mujer", "niños"];
-    if (!categoriasValidas.includes(categoriaBuscada)) {
-      setError("La categoría debe ser 'hombre', 'mujer' o 'niños'.");
-      setFilteredProducts([]); 
+    if (categoriaSeleccionada === "") {
+      setFilteredProducts(products);
+      setError(null);
       return;
     }
 
     const filtered = products.filter((product) =>
-      product.categoria?.toLowerCase().includes(categoriaBuscada)
+      product.categoria?.toLowerCase().includes(categoriaSeleccionada.toLowerCase())
     );
 
-    setFilteredProducts(filtered);
-    setError(null); 
-  };
+    if (filtered.length === 0) {
+      setError("No se encontraron productos en esa categoría.");
+    } else {
+      setError(null);
+    }
 
-  const handleInputChange = (e) => {
-    setSearchCategory(e.target.value);
-    setError(null);
+    setFilteredProducts(filtered);
   };
 
   return (
     <Container fluid className="colorCardAllProducts p-5">
-      <Form className="p-5" onSubmit={handleSearch}>
+      <Form className="p-5">
         <Row>
           <Col xs="auto">
-            <Form.Control
-              type="text"
-              placeholder="Ingresar categoría"
-              className="mr-sm-2"
+            <Form.Select
               value={searchCategory}
               onChange={handleInputChange}
-              maxLength={15} // Límite de 15 caracteres
-            />
-          </Col>
-          <Col xs="auto">
-            <Button type="submit">Buscar</Button>
+              className="mr-sm-2"
+            >
+              <option value="">Seleccionar categoría</option>
+              <option value="hombre">Hombre</option>
+              <option value="mujer">Mujer</option>
+              <option value="niños">Niños</option>
+            </Form.Select>
           </Col>
         </Row>
       </Form>
+
       {error && (
         <p style={{ color: "red", textAlign: "center", fontSize: "1.2rem" }}>
           {error}
         </p>
       )}
+
       <Row className="justify-content-center">
         {filteredProducts.map((product, index) => (
           <Col

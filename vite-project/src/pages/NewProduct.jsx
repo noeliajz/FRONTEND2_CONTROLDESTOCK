@@ -112,7 +112,7 @@ function NewProduct() {
               )}
             </Form.Group>
             <Form.Group controlId="inputPrecio" className="mt-3">
-              <Form.Label>Precio</Form.Label>
+              <Form.Label>Ingresar el precio</Form.Label>
               <Form.Control
                 type="number"
                 name="precio"
@@ -126,7 +126,7 @@ function NewProduct() {
               )}
             </Form.Group>
             <Form.Group controlId="inputDescripcion" className="mt-3">
-              <Form.Label>Descripción</Form.Label>
+              <Form.Label>Ingresar una descripción</Form.Label>
               <Form.Control
                 type="text"
                 name="descripcion"
@@ -140,7 +140,7 @@ function NewProduct() {
               )}
             </Form.Group>
             <Form.Group controlId="inputStock" className="mt-3">
-              <Form.Label>Stock</Form.Label>
+              <Form.Label>Ingresar stock</Form.Label>
               <Form.Control
                 type="number"
                 name="stock"
@@ -155,7 +155,7 @@ function NewProduct() {
             </Form.Group>
 
             <Form.Group controlId="archivoImagen" className="mt-3">
-              <Form.Label>Archivo de Imagen</Form.Label>
+              <Form.Label>Agregar una Imagen</Form.Label>
               <Form.Control
                 type="file"
                 accept="image/*"
@@ -164,7 +164,7 @@ function NewProduct() {
             </Form.Group>
 
             <Form.Group controlId="inputCategoria" className="mt-3">
-              <Form.Label>Categoría</Form.Label>
+              <Form.Label>Agregar la categoría del producto</Form.Label>
               <Form.Control
                 type="text"
                 name="categoria"

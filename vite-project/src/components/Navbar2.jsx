@@ -5,6 +5,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import '../css/style.css';
+import icono from "../assets/icono.png";
 
 function Navbar2({Login, LoginAuth, auth}) {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ function Navbar2({Login, LoginAuth, auth}) {
     <Navbar collapseOnSelect expand="lg" className="colorNavbar">
       <Container>
         <Navbar.Brand as={Link} to="/" className="colorLetrasNavbar fs-3">
-          MiApp
+          <img src={icono} alt="" className='estiloIcono'/>Control de stock
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
