@@ -59,7 +59,7 @@ function NewUser() {
     }
 
     try {
-      const res = await fetch(`http://localhost:8080/api`, {
+      const res = await fetch(`http://localhost:3000/api`, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
@@ -98,7 +98,7 @@ function NewUser() {
         <Col md={6}>
           <Form>
             <Form.Group controlId="inputNombres">
-              <Form.Label>Nombre</Form.Label>
+              <Form.Label>Ingresar nombre del usuario</Form.Label>
               <Form.Control
                 type="text"
                 name="nombres"
@@ -112,7 +112,7 @@ function NewUser() {
               )}
             </Form.Group>
             <Form.Group controlId="inputApellido" className="mt-3">
-              <Form.Label>Apellido</Form.Label>
+              <Form.Label>Ingresar el apellido</Form.Label>
               <Form.Control
                 type="text"
                 name="apellido"
@@ -126,7 +126,7 @@ function NewUser() {
               )}
             </Form.Group>
             <Form.Group controlId="inputUsuario" className="mt-3">
-              <Form.Label>Usuario</Form.Label>
+              <Form.Label>Ingresar email del usuario</Form.Label>
               <Form.Control
                 type="email"
                 name="usuario"
@@ -140,7 +140,7 @@ function NewUser() {
               )}
             </Form.Group>
             <Form.Group controlId="inputContrasenia" className="mt-3">
-              <Form.Label>Contraseña</Form.Label>
+              <Form.Label>Ingresar la contraseña</Form.Label>
               <Form.Control
                 type="password"
                 name="contrasenia"

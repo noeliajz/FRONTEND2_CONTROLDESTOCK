@@ -42,7 +42,7 @@ function UserEdit() {
 
   const getUser = async () => {
     const token = localStorage.getItem('token');
-    const res = await fetch(`http://localhost:8080/api/${id}`, {
+    const res = await fetch(`http://localhost:3000/api/${id}`, {
       method: 'GET',
       headers: {
         'content-type': 'application/json',
@@ -85,7 +85,7 @@ function UserEdit() {
       contrasenia
     };
 
-    const res = await fetch(`http://localhost:8080/api/${id}`, {
+    const res = await fetch(`http://localhost:3000/api/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -117,27 +117,27 @@ function UserEdit() {
   }, [id]);
 
   return (
-    <Container fluid className="estiloLoginContenedor">
+    <Container fluid className="estiloLoginContenedor py-5">
       <Row className="justify-content-center">
         <Col md={6}>
           <Form>
             <Form.Group controlId="inputNombre">
-              <Form.Label>Nombre del usuario</Form.Label>
+              <Form.Label>Ingresar nombre del usuario</Form.Label>
               <Form.Control type="text" name="nombres" onChange={handleChange} value={formValues.nombres} />
               {errors.nombres && <small style={{ color: 'red' }}>Se permite entre 3 a 25 caracteres</small>}
             </Form.Group>
             <Form.Group controlId="inputApellido">
-              <Form.Label>Apellido del usuario</Form.Label>
+              <Form.Label>Ingresar apellido del usuario</Form.Label>
               <Form.Control type="text" name="apellido" onChange={handleChange} value={formValues.apellido} />
               {errors.apellido && <small style={{ color: 'red' }}>Se permite entre 3 a 25 caracteres</small>}
             </Form.Group>
             <Form.Group controlId="inputUsuario" className="mt-3">
-              <Form.Label>Usuario</Form.Label>
+              <Form.Label>Ingresar email del usuario</Form.Label>
               <Form.Control type="email" name="usuario" onChange={handleChange} value={formValues.usuario} />
               {errors.usuario && <small style={{ color: 'red' }}>Se permite entre 3 a 25 caracteres</small>}
             </Form.Group>
             <Form.Group controlId="inputContrasenia" className="mt-3">
-              <Form.Label>Contraseña</Form.Label>
+              <Form.Label>Ingresar la contraseña</Form.Label>
               <Form.Control type="password" name="contrasenia" onChange={handleChange} value={formValues.contrasenia} />
               {errors.contrasenia && <small style={{ color: 'red' }}>Se permite entre 4 a 25 caracteres</small>}
             </Form.Group>

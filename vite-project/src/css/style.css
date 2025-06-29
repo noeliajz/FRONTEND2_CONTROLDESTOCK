@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Lobster&display=swap');
 
 body {
-    font-family: 'Lobster', cursive;  /* Fuente por defecto */
+    font-family: 'Lobster', cursive; 
+    background: #FFFBE6;
 }
 *{
     margin: 0;
@@ -9,19 +10,17 @@ body {
     box-sizing: border-box;
 }
 .colorNavbar{
-    background: #080957;
+    background: #00712D;
 }
 .colorLetrasNavbar{
-    color:  #DBDBEB;
-    text-shadow: 3px 2px 3px #7577CD;
-    font-weight: bold;
+    color:  #D5ED9F;
 }
 .estilosFooter {
-    background-color: #FF6D02;
+    background-color: #FF9100;
     height: 450px;
     text-decoration: none;
     list-style: none;
-    color: #080957,
+    color: #00712D,
     padding-top= 12px;
     margin-top: auto;
 }
@@ -29,34 +28,34 @@ body {
 .colorCardAllProducts{
     background: #DBDBEB;
 }
-.linkColorMenu:hover {
-    background: #FF6D02;
-    border-radius: 10px;
-    color: #DBDBEB 
-}
 
 .estiloLoginContenedor{
-    background: #DBDBEB
+    background: #FFFBE6
 }
 .colorBoton{
-    color: #FF8303;
+    color: #FF9100;
     font-weight: bold;
     text-shadow: 
-        1px 1px 4px #080957
+        1px 1px 4px #00712D
 }
 
 .error-container {
-  width: 100vw; /* 100% del ancho de la pantalla */
-  height: calc(100vh - 70px); /* 100% del alto de la pantalla menos el Navbar */
+  width: 100vw; 
+  height: calc(100vh - 70px); 
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden; /* Evita el scroll horizontal */
-  position: relative; /* Mantiene el div en su lugar */
+  overflow: hidden; 
+  position: relative; 
 }
 
 .error-image {
-  width: 100%; /* Asegura que la imagen ocupe el ancho completo */
-  height: 100%; /* Asegura que la imagen ocupe el alto disponible */
-  object-fit: cover; /* Ajusta la imagen sin deformarla */
+  width: 100%; 
+  height: 100%;  
+  object-fit: cover; 
+}
+
+.estiloIcono{
+    height: 50px;
+    width: 50px;
 }

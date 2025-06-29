@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { useParams, NavLink } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { Container, Row, Col, Form } from 'react-bootstrap';
@@ -22,7 +22,7 @@ function ProductEdit() {
   const getProduct = async () => {
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch(`http://localhost:8080/api/product/${id}`, {
+      const res = await fetch(`http://localhost:3000/api/product/${id}`, {
         method: 'GET',
         headers: {
           'content-type': 'application/json',
@@ -62,7 +62,7 @@ function ProductEdit() {
     }
 
     try {
-      const res = await fetch(`http://localhost:8080/api/product/${id}`, {
+      const res = await fetch(`http://localhost:3000/api/product/${id}`, {
         method: 'PUT',
         headers: {
           'Authorization': `${token}`
@@ -87,32 +87,32 @@ function ProductEdit() {
   }, [id]);
 
   return (
-    <Container fluid className="estiloLoginContenedor">
+    <Container fluid className="estiloLoginContenedor py-5">
       <Row className="justify-content-center">
         <Col md={6}>
           <Form>
             <Form.Group controlId="inputNombre">
-              <Form.Label>Nombre del producto</Form.Label>
+              <Form.Label>Ingresar nombre del producto</Form.Label>
               <Form.Control type="text" name="nombre" onChange={handleChange} value={formValues.nombre} />
             </Form.Group>
             <Form.Group controlId="inputPrecio" className="mt-3">
-              <Form.Label>Precio</Form.Label>
+              <Form.Label>Ingresar el precio</Form.Label>
               <Form.Control type="number" name="precio" onChange={handleChange} value={formValues.precio} />
             </Form.Group>
             <Form.Group controlId="inputDescripcion" className="mt-3">
-              <Form.Label>Descripción</Form.Label>
+              <Form.Label>Ingresar una descripción</Form.Label>
               <Form.Control type="text" name="descripcion" onChange={handleChange} value={formValues.descripcion} />
             </Form.Group>
             <Form.Group controlId="inputStock" className="mt-3">
-              <Form.Label>Stock</Form.Label>
+              <Form.Label>Ingresar el stock</Form.Label>
               <Form.Control type="number" name="stock" onChange={handleChange} value={formValues.stock} />
             </Form.Group>
             <Form.Group controlId="inputImagen" className="mt-3">
-              <Form.Label>Imagen</Form.Label>
+              <Form.Label>Ingresar una imagen</Form.Label>
               <Form.Control type="file" accept="image/*" onChange={(e) => setImagenFile(e.target.files[0])} />
             </Form.Group>
             <Form.Group controlId="inputCategoria" className="mt-3">
-              <Form.Label>Categoría</Form.Label>
+              <Form.Label>Ingresar la categoría del producto</Form.Label>
               <Form.Control type="text" name="categoria" onChange={handleChange} value={formValues.categoria} />
             </Form.Group>
             <NavLink to="#" className="colorBoton fs-4 py-3" onClick={handleClick}>

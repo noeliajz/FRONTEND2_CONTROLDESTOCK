@@ -18,10 +18,6 @@ Puede realizar un CRUD completo de productos (crear, leer, modificar y eliminar)
 -Puede gestionar usuarios registrados (eliminarlos).
 
 ⚙️ Aspectos técnicos del sistema
-📦 Backend:
--Hecho en Node.js y Express.
--Autenticación y autorización con JWT y bcrypt.
--Base de datos MongoDB con colecciones como usuarios y productos.
 
 💻 Frontend:
 -Hecho con React.js.
