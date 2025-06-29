@@ -52,6 +52,8 @@ function Navbar2({Login, LoginAuth, auth}) {
               </Nav.Link>
             ) : (
               <>
+                <Nav.Link as={Link} to="/Quien" className="colorLetrasNavbar fs-4">Quien soy</Nav.Link>
+                <Nav.Link as={Link} to="/Contacto" className="colorLetrasNavbar fs-4">Contacto</Nav.Link>
                 <Nav.Link as={Link} to="/Login" className="colorLetrasNavbar fs-4">Login</Nav.Link>
                 <Nav.Link as={Link} to="/Register" className="colorLetrasNavbar fs-4">Registro</Nav.Link>
               </>

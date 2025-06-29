@@ -19,6 +19,7 @@ Puede realizar un CRUD completo de productos (crear, leer, modificar y eliminar)
 
 ⚙️ Aspectos técnicos del sistema
 
+
 💻 Frontend:
 -Hecho con React.js.
 -Uso de Axios y fetch para comunicarse con el backend.
