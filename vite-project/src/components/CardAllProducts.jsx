@@ -75,7 +75,7 @@ function CardAllProducts() {
               onChange={handleInputChange}
               className="mr-sm-2"
             >
-              <option value="">Seleccionar categoría</option>
+              <option value="">Seleccionar una categoría</option>
               <option value="hombre">Hombre</option>
               <option value="mujer">Mujer</option>
               <option value="niños">Niños</option>
