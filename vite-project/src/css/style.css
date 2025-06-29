@@ -20,13 +20,7 @@ body {
     height: 450px;
     text-decoration: none;
     list-style: none;
-    color: #00712D,
-    padding-top= 12px;
-    margin-top: auto;
-}
-
-.colorCardAllProducts{
-    background: #DBDBEB;
+    color: inherit;
 }
 
 .estiloLoginContenedor{
@@ -58,4 +52,13 @@ body {
 .estiloIcono{
     height: 50px;
     width: 50px;
+}
+
+.imagen{
+  width: 200px; 
+  height: 200px; 
+  border-radius: 50%; 
+  object-fit: cover; 
+  display: block; 
+  margin: 0 auto;
 }

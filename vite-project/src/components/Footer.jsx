@@ -17,7 +17,7 @@ function Footer() {
           </Col>
         </Row>
         <Row>
-          <Col >
+          <Col  xs={12} sm={6} md={3}>
             <div className="p-4">
               <div>
                 <Link
@@ -58,7 +58,7 @@ function Footer() {
               </div>
             </div>
           </Col>
-          <Col >
+          <Col xs={12} sm={6} md={3}>
             <div className="p-4">
               <div>
                 <Link
@@ -76,7 +76,7 @@ function Footer() {
               </div>
             </div>
           </Col>
-          <Col>
+          <Col xs={12} sm={6} md={3}>
             <div className="p-4">
               <Link
                 to="/Error404"
@@ -86,7 +86,7 @@ function Footer() {
               </Link>
             </div>
           </Col>
-          <Col >
+          <Col xs={12} sm={6} md={3}>
             <div className="p-4">
               <Link
                 to="/Error404"
