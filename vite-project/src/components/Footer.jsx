@@ -86,23 +86,6 @@ function Footer() {
               </Link>
             </div>
           </Col>
-          <Col xs={12} sm={6} md={3}>
-            <div className="p-4">
-              <Link
-                to="/Error404"
-                className="fs-4 estilosFooter"
-              >
-                Ubicación
-              </Link>
-            </div>
-            <div className="p-4">
-              <Link
-                to="/Error404"
-                className="fs-4 estilosFooter"
-              >                
-              </Link>
-            </div>
-          </Col>
         </Row>
       </Container>
     </>

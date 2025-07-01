@@ -18,7 +18,7 @@ function CardAllProducts() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `${token}`,
+            "Authorization": `${token}`,
           },
         });
 
