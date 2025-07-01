@@ -30,6 +30,7 @@ function ProductEdit() {
         }
       });
       const data = await res.json();
+      console.log(data)
       const producto = data.obtenerUnProducto || data.producto || data;
       setFormValues({
         nombre: producto.nombre || '',
