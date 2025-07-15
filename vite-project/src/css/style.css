@@ -1,9 +1,48 @@
 @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Lobster&display=swap');
 
-body {
-    font-family: 'Lobster', cursive; 
-    background: #FFFBE6;
+
+
+/* Asegura que el layout siempre llene toda la altura */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+font-family: 'Lobster', cursive; 
+background: #FFFBE6;
 }
+
+/* Aplica esto en tu layout principal o App si no lo tenías */
+#root, .app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Asegura que el contenido principal crezca */
+main {
+  flex: 1;
+}
+
+/* Estilos específicos del footer */
+.footer {
+  background-color: #f8f9fa;
+  color: #333;
+  width: 100%;
+  margin-top: auto; /* Lo empuja al fondo */
+}
+
+.footer-link {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+  text-decoration: none;
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+}
+
 *{
     margin: 0;
     padding: 0;
@@ -21,6 +60,7 @@ body {
     text-decoration: none;
     list-style: none;
     color: inherit;
+    margin-top: auto;
 }
 
 .estiloLoginContenedor{
