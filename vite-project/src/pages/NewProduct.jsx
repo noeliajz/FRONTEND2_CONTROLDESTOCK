@@ -69,7 +69,7 @@ function NewProduct() {
       formData.append("stock", formValues.stock);
       formData.append("categoria", formValues.categoria);
       formData.append("imagen", imagenFile);
-      const res = await fetch(`https://backend-control-de-stock.vercel.app/api/product`, {
+      const res = await fetch(`https://backend-control-de-stock-zlqv.vercel.app/api/product`, {
         method: "POST",
         headers: {
           'Authorization': `${token}`

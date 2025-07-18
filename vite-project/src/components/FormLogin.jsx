@@ -63,7 +63,7 @@ const FormLogin = () => {
 
     setLoading(true);
     try {
-      const response = await fetch("https://backend-control-de-stock.vercel.app/api/login", {
+      const response = await fetch("https://backend-control-de-stock-zlqv.vercel.app/api/login", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json" },
