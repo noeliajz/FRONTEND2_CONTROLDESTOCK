@@ -22,7 +22,9 @@ function ProductEdit() {
   const getProduct = async () => {
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch(`http://localhost:3000/api/product/${id}`, {
+      const res = await fetch(`https://backend-control-de-stock.vercel.app/
+
+/api/product/${id}`, {
         method: 'GET',
         headers: {
           'content-type': 'application/json',
@@ -63,7 +65,7 @@ function ProductEdit() {
     }
 
     try {
-      const res = await fetch(`http://localhost:3000/api/product/${id}`, {
+      const res = await fetch(`https://backend-control-de-stock.vercel.app/api/product/${id}`, {
         method: 'PUT',
         headers: {
           'Authorization': `${token}`

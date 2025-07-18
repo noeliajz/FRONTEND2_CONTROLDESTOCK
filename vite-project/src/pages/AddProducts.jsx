@@ -10,7 +10,7 @@ const getAllProducts = async () => {
   const token = localStorage.getItem("token");
 
   try {
-    const res = await fetch("http://localhost:3000/api/product", {
+    const res = await fetch("https://backend-control-de-stock.vercel.app/api/product", {
       method: "GET",
       headers: {
         "Authorization": `${token}`, // 🔑 Lo más importante
@@ -61,7 +61,9 @@ const getAllProducts = async () => {
                 <td>{new Date(product.fecha).toLocaleDateString()}</td>
                 <td>
                   <img
-                    src={`http://localhost:3000/${product.imagen}`}
+                    src={`https://backend-control-de-stock.vercel.app/
+
+/${product.imagen}`}
                     alt={product.nombre}
                     style={{
                       width: "50px",
