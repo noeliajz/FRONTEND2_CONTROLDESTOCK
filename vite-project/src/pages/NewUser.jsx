@@ -59,7 +59,8 @@ function NewUser() {
     }
 
     try {
-      const res = await fetch(`http://localhost:3000/api`, {
+      const res = await fetch(`backend-control-de-stock.vercel.app
+/api`, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",

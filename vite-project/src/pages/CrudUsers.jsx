@@ -12,7 +12,8 @@ const CrudUsers = () => {
 
   const getAllUsers = async () => {
     const token = localStorage.getItem('token');
-    const res = await fetch("http://localhost:3000/api", {
+    const res = await fetch("backend-control-de-stock.vercel.app
+/api", {
       method: 'GET',
       headers: {
         'content-type': 'application/json',
@@ -27,7 +28,8 @@ const CrudUsers = () => {
     const isConfirmed = window.confirm("¿Estás seguro de que deseas eliminar este usuario?");
     if (isConfirmed) {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:3000/api/${id}`, {
+      const res = await fetch(`backend-control-de-stock.vercel.app
+/api/${id}`, {
         method: "DELETE",
         headers: {
           'Content-Type': 'application/json',

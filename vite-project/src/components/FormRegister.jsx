@@ -55,7 +55,7 @@ const FormRegister = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:3000/api", formInputs, {
+      const response = await axios.post("backend-control-de-stock.vercel.app/api", formInputs, {
         headers: {
           "Content-Type": "application/json",
         },
