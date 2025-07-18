@@ -14,7 +14,7 @@ function CardAllProducts() {
     const getAllProducts = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await fetch("https://backend-control-de-stock.vercel.app/api/product", {
+        const res = await fetch("https://backend-control-de-stock-zlqv.vercel.app/api/product", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

@@ -42,7 +42,7 @@ function UserEdit() {
 
   const getUser = async () => {
     const token = localStorage.getItem('token');
-    const res = await fetch(`https://backend-control-de-stock.vercel.app/api/${id}`, {
+    const res = await fetch(`https://backend-control-de-stock-zlqv.vercel.app/api/${id}`, {
       method: 'GET',
       headers: {
         'content-type': 'application/json',
@@ -85,7 +85,8 @@ function UserEdit() {
       contrasenia
     };
 
-    const res = await fetch(`https://backend-control-de-stock.vercel.app/
+    const res = await fetch(`https://backend-control-de-stock-zlqv.vercel.app/
+
 
 /api/${id}`, {
       method: 'PUT',

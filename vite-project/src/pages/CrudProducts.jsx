@@ -12,7 +12,7 @@ const CrudProducts = () => {
   const getAllProducts = async () => {
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch("https://backend-control-de-stock.vercel.app/api/product", {
+      const res = await fetch("https://backend-control-de-stock-zlqv.vercel.app/api/product", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -37,7 +37,8 @@ const CrudProducts = () => {
     );
     if (isConfirmed) {
       try {
-        const res = await fetch(`https://backend-control-de-stock.vercel.app/
+        const res = await fetch(`https://backend-control-de-stock-zlqv.vercel.app/
+
 
 /api/product/${id}`, {
           method: "DELETE",
@@ -98,7 +99,8 @@ const CrudProducts = () => {
               <td>${product.precio}</td>
               <td>
                 <img
-                  src={`https://backend-control-de-stock.vercel.app/
+                  src={`https://backend-control-de-stock-zlqv.vercel.app/
+
 
 /${product.imagen}`}
                   alt={product.nombre}
