@@ -27,12 +27,13 @@ const url = import.meta.env.VITE_API_URL
   const deleteUser = async (id) => {
     const isConfirmed = window.confirm("¿Estás seguro de que deseas eliminar este usuario?");
     if (isConfirmed) {
-      const token = localStorage.getItem('token');
+      try {
+        const token = localStorage.getItem('token');
       const res = await fetch(url+`/${id}`, {
         method: "DELETE",
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `${token}`
+           Authorization: `${token}`
         },
       });
       if (res.ok) {
@@ -40,6 +41,10 @@ const url = import.meta.env.VITE_API_URL
       } else {
         const errorData = await res.json();
         alert(`Error al eliminar el usuario: ${errorData.message || "Desconocido"}`);
+      }
+      } catch (error) {
+        console.error("Error al eliminar producto:", error);
+        alert(`Error al eliminar el producto: ${error.message}`);
       }
     }
   };
