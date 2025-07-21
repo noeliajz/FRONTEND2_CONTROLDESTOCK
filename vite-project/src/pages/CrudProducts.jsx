@@ -38,10 +38,7 @@ const CrudProducts = () => {
     );
     if (isConfirmed) {
       try {
-        const res = await fetch(`https://backend-control-de-stock-zlqv.vercel.app/
-
-
-/api/product/${id}`, {
+        const res = await fetch(url+`/product/${id}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
