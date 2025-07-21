@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 import { Container, Row, Col, Form } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
+import { NavLink , useNavigate} from "react-router-dom";
 
 function NewProduct() {
 const url = import.meta.env.VITE_API_URL
+ const navigate = useNavigate();
   const [formValues, setFormValues] = useState({
     nombre: "",
     precio: "",
@@ -82,7 +83,9 @@ const url = import.meta.env.VITE_API_URL
         icon: "success",
         title: "Producto creado",
         text: "El producto se creó correctamente",
-      });
+      }).then(() => {
+        navigate("/CrudProducts"); 
+      });;
     } catch (error) {
       console.error("Error creando el producto:", error);
       Swal.fire({

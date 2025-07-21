@@ -82,7 +82,7 @@ function NewUser() {
         apellido: "",
         usuario: "",
         contrasenia: ""
-      });
+      })
     } catch (error) {
       console.error("Error guardando el usuario:", error);
       Swal.fire({

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
@@ -13,7 +13,7 @@ const url = import.meta.env.VITE_API_URL
 
   const getAllUsers = async () => {
     const token = localStorage.getItem('token');
-    const res = await fetch(url+"/product", {
+    const res = await fetch(url, {
       method: 'GET',
       headers: {
         'content-type': 'application/json',
@@ -28,10 +28,7 @@ const url = import.meta.env.VITE_API_URL
     const isConfirmed = window.confirm("¿Estás seguro de que deseas eliminar este usuario?");
     if (isConfirmed) {
       const token = localStorage.getItem('token');
-      const res = await fetch(`https://backend-control-de-stock-zlqv.vercel.app/
-
-
-/api/${id}`, {
+      const res = await fetch(url+`/${id}`, {
         method: "DELETE",
         headers: {
           'Content-Type': 'application/json',
