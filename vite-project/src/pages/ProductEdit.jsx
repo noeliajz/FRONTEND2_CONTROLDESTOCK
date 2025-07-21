@@ -4,6 +4,8 @@ import Swal from 'sweetalert2';
 import { Container, Row, Col, Form } from 'react-bootstrap';
 
 function ProductEdit() {
+  const url = import.meta.env.VITE_API_URL
+
   const { id } = useParams();
   const [formValues, setFormValues] = useState({
     nombre: '',
@@ -22,10 +24,7 @@ function ProductEdit() {
   const getProduct = async () => {
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch(`https://backend-control-de-stock-zlqv.vercel.app/
-
-
-/api/product/${id}`, {
+      const res = await fetch(url+`/product/${id}`, {
         method: 'GET',
         headers: {
           'content-type': 'application/json',
@@ -66,7 +65,7 @@ function ProductEdit() {
     }
 
     try {
-      const res = await fetch(`https://backend-control-de-stock-zlqv.vercel.app/api/product/${id}`, {
+      const res = await fetch(url+`/product/${id}`, {
         method: 'PUT',
         headers: {
           'Authorization': `${token}`

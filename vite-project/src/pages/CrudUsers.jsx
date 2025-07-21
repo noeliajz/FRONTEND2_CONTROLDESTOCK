@@ -9,10 +9,11 @@ import { faFilePen } from "@fortawesome/free-solid-svg-icons";
 
 const CrudUsers = () => {
   const [users, setusers] = useState([]);
+const url = import.meta.env.VITE_API_URL
 
   const getAllUsers = async () => {
     const token = localStorage.getItem('token');
-    const res = await fetch("https://backend-control-de-stock-zlqv.vercel.app/api", {
+    const res = await fetch(url+"/product", {
       method: 'GET',
       headers: {
         'content-type': 'application/json',

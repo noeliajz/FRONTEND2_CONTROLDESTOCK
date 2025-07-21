@@ -8,11 +8,12 @@ import { faTrashCan, faFilePen } from "@fortawesome/free-solid-svg-icons";
 
 const CrudProducts = () => {
   const [products, setProducts] = useState([]);
+  const url = import.meta.env.VITE_API_URL
 
   const getAllProducts = async () => {
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch("https://backend-control-de-stock-zlqv.vercel.app/api/product", {
+      const res = await fetch(url+"/product", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

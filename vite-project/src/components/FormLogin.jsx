@@ -1,11 +1,13 @@
-import React, { useState, useContext } from "react"; // ✅ Importar useContext
+import React, { useState, useContext } from "react"; 
 import { useNavigate, NavLink } from "react-router-dom";
 import { Form, Container, Row, Col } from "react-bootstrap";
-import { AuthContext } from "../context/AuthContext"; // ✅ Importar AuthContext
+import { AuthContext } from "../context/AuthContext"; 
 
 const FormLogin = () => {
   const navigate = useNavigate();
-  const { login } = useContext(AuthContext); // ✅ Obtener la función login del contexto
+  const { login } = useContext(AuthContext); 
+  const url = import.meta.env.VITE_API_URL
+
 
   const [formInputs, setFormInputs] = useState({
     usuario: "",
@@ -63,7 +65,7 @@ const FormLogin = () => {
 
     setLoading(true);
     try {
-      const response = await fetch("https://backend-control-de-stock-zlqv.vercel.app/api/login", {
+      const response = await fetch(url+"/login", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json" },
