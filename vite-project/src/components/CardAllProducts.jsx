@@ -9,12 +9,13 @@ function CardAllProducts() {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchCategory, setSearchCategory] = useState("");
   const [error, setError] = useState(null);
+  const url = import.meta.env.VITE_API_URL
 
   useEffect(() => {
     const getAllProducts = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await fetch("https://backend-control-de-stock-zlqv.vercel.app/api/product", {
+        const res = await fetch(url+"/product", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

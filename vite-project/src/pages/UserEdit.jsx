@@ -5,6 +5,7 @@ import { Container, Row, Col, Form } from 'react-bootstrap';
 import bcrypt from 'bcryptjs';
 
 function UserEdit() {
+const url = import.meta.env.VITE_API_URL
   const { id } = useParams();
   const [formValues, setFormValues] = useState({
     nombres: '',
@@ -42,7 +43,7 @@ function UserEdit() {
 
   const getUser = async () => {
     const token = localStorage.getItem('token');
-    const res = await fetch(`https://backend-control-de-stock-zlqv.vercel.app/api/${id}`, {
+    const res = await fetch(url+`/${id}`, {
       method: 'GET',
       headers: {
         'content-type': 'application/json',
@@ -85,10 +86,7 @@ function UserEdit() {
       contrasenia
     };
 
-    const res = await fetch(`https://backend-control-de-stock-zlqv.vercel.app/
-
-
-/api/${id}`, {
+    const res = await fetch(url+`/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

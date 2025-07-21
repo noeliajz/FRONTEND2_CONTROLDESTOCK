@@ -4,6 +4,7 @@ import { Container, Row, Col, Form } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 
 function NewUser() {
+  const url = import.meta.env.VITE_API_URL
   const [formValues, setFormValues] = useState({
     nombres: "",
     apellido: "",
@@ -59,7 +60,7 @@ function NewUser() {
     }
 
     try {
-      const res = await fetch(`https://backend-control-de-stock-zlqv.vercel.app/api`, {
+      const res = await fetch(url, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",

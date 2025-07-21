@@ -2,7 +2,6 @@
 
 
 
-/* Asegura que el layout siempre llene toda la altura */
 html, body {
   height: 100%;
   margin: 0;
@@ -12,24 +11,21 @@ font-family: 'Lobster', cursive;
 background: #FFFBE6;
 }
 
-/* Aplica esto en tu layout principal o App si no lo tenías */
 #root, .app-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-/* Asegura que el contenido principal crezca */
 main {
   flex: 1;
 }
 
-/* Estilos específicos del footer */
 .footer {
   background-color: #f8f9fa;
   color: #333;
   width: 100%;
-  margin-top: auto; /* Lo empuja al fondo */
+  margin-top: auto; 
 }
 
 .footer-link {

@@ -5,6 +5,7 @@ import {  NavLink } from "react-router-dom";
 
 const FormRegister = () => {
   const navigate = useNavigate();
+  const url = import.meta.env.VITE_API_URL
 
   const [formInputs, setFormInputs] = useState({
     nombres: "",
@@ -55,7 +56,7 @@ const FormRegister = () => {
     }
 
     try {
-      const response = await axios.post("https://backend-control-de-stock-zlqv.vercel.app/api", formInputs, {
+      const response = await axios.post(url+"/api", formInputs, {
         headers: {
           "Content-Type": "application/json",
         },

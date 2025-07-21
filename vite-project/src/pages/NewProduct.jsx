@@ -4,6 +4,7 @@ import { Container, Row, Col, Form } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 
 function NewProduct() {
+const url = import.meta.env.VITE_API_URL
   const [formValues, setFormValues] = useState({
     nombre: "",
     precio: "",
@@ -69,7 +70,7 @@ function NewProduct() {
       formData.append("stock", formValues.stock);
       formData.append("categoria", formValues.categoria);
       formData.append("imagen", imagenFile);
-      const res = await fetch(`https://backend-control-de-stock-zlqv.vercel.app/api/product`, {
+      const res = await fetch(url+"/product", {
         method: "POST",
         headers: {
           'Authorization': `${token}`

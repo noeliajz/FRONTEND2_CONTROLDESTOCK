@@ -1,6 +1,6 @@
 import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
-import Imagen1 from '../assets/Imagen1.jpg'; // Asegúrate de que la extensión es correcta
+import Imagen1 from '../assets/Imagen1.jpg'; 
 import Imagen2 from '../assets/Imagen2.jpg';
 import Imagen3 from '../assets/Imagen3.jpg';
 
